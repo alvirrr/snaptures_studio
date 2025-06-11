@@ -26,7 +26,8 @@
         <div class="max-w-xl mx-auto px-6 bg-white shadow-xl rounded-2xl p-8">
             <h2 class="text-2xl font-bold text-center text-black mb-6">Form Pemesanan</h2>
 
-            <form action="nota" method="POST" class="space-y-4">
+            <form action="{{ route('pesanan.submit') }}" method="POST" class="space-y-4">
+                @csrf
                 <!-- Nama -->
                 <div>
                     <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
@@ -113,13 +114,14 @@
 
                 <!-- Tombol Submit -->
                 <div class="text-center">
-                    <a href="nota">
-                        <button type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition">Kirim
-                            Pesanan</button>
-                    </a>
+                    <button type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition">
+                        Kirim Pesanan
+                    </button>
                 </div>
+
             </form>
+
         </div>
     </section>
 

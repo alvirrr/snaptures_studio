@@ -25,7 +25,7 @@
 
             #invoice {
                 position: absolute;
-                left:2%;
+                left: 2%;
                 top: 2%;
                 width: 100%;
                 margin: 2%;
@@ -58,19 +58,20 @@
 
             <div class="space-y-2 text-sm">
                 <p><strong>ID Pesanan:</strong> <span id="orderId"></span></p>
-                <p><strong>Nama:</strong> Firman</p>
-                <p><strong>Email:</strong> firman@email.com</p>
-                <p><strong>No. HP:</strong> 08123456789</p>
-                <p><strong>Paket:</strong> Self Photo - Paket 2</p>
-                <p><strong>Tanggal Booking:</strong> 2025-05-13</p>
-                <p><strong>Jam:</strong> 14:00 WIB</p>
+                <p><strong>Nama:</strong> {{ $data['nama'] }}</p>
+                <p><strong>No. HP:</strong> {{ $data['no_hp'] }}</p>
+                <p><strong>Paket:</strong> {{ $data['paket'] }}</p>
+                <p><strong>Tanggal Booking:</strong> {{ $data['tanggal'] }}</p>
+                <p><strong>Jam:</strong> {{ $data['waktu'] }} WIB</p>
                 <p><strong>Total Bayar:</strong> <span class="font-semibold text-lg text-green-700">Rp 100.000</span>
                 </p>
             </div>
 
             <div class="text-center mt-8">
-                <p class="text-sm text-gray-600">Silahkan melakukan pembayran ke rekening <strong>BRI : 6298 0105 0917 535 AN ACHMAD AGUNG ALFIANTO</strong></p>
-                <p class="text-sm text-gray-600">kirim bukti pembayaran ke menu <a href="pembayaran"></a><strong>Pembayran</strong></p>
+                <p class="text-sm text-gray-600">Silahkan melakukan pembayran ke rekening <strong>BRI : 6298 0105 0917
+                        535 AN ACHMAD AGUNG ALFIANTO</strong></p>
+                <p class="text-sm text-gray-600">kirim bukti pembayaran ke menu <a
+                        href="pembayaran"></a><strong>Pembayran</strong></p>
                 <p class="text-sm text-gray-600">Terima kasih telah memesan di <strong>Snaptures Studio</strong>!</p>
             </div>
 

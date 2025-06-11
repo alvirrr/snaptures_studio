@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookingController;
+// use App\Http\Controllers\BookingController;
+use App\Http\Controllers\formPesananController;
 
 Route::get('/', function () {
     return view('home');
@@ -80,8 +81,12 @@ Route::get('/profil', function () {
 
 
 // routes/web.php
-Route::middleware(['auth'])->group(function () {
-    Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
-    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-    Route::get('/booking/slots', [BookingController::class, 'getBookedSlots']);
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/booking', [BookingController::class, 'index'])->name('booking.index');
+//     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+//     Route::get('/booking/slots', [BookingController::class, 'getBookedSlots']);
+// });
+
+
+Route::post('/nota', [formPesananController::class, 'submit'])->name('pesanan.submit');
+Route::get('/nota', [formPesananController::class, 'nota'])->name('nota');
