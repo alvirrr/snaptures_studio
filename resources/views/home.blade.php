@@ -23,7 +23,7 @@
         <x-mobile-menu></x-mobile-menu>
     </header>
     <div class="relative isolate px-3 pt-56 lg:px-6 bg-cover bg-center"
-        style="background-image: url('{{ asset('img/s4.jpg') }}')">
+        style="background-image: url('{{ asset('img/sampul.jpg') }}')">
         <div class="mx-auto max-w-2xl py-5 sm:py-20 lg:py-28">
             <div class="text-center">
                 <h1
@@ -60,21 +60,21 @@
             </div>
             <!-- Card 2 -->
             <div class="w-60 rounded-xl overflow-hidden shadow-md bg-gray-100">
-                <img src="{{ asset('img/s4.jpg') }}" alt="College Session" class="w-full h-85 object-cover">
+                <img src="{{ asset('img/s5.jpg') }}" alt="College Session" class="w-full h-85 object-cover">
                 <div class="p-3 text-center">
                     <p class="font-semibold text-sm">Self Photo</p>
                 </div>
             </div>
             <!-- Card 3 -->
             <div class="w-60 rounded-xl overflow-hidden shadow-md bg-gray-100">
-                <img src="{{ asset('img/s4.jpg') }}" alt="Single Session" class="w-full h-85 object-cover">
+                <img src="{{ asset('img/s1.jpg') }}" alt="Single Session" class="w-full h-85 object-cover">
                 <div class="p-3 text-center">
                     <p class="font-semibold text-sm">Pas Photo</p>
                 </div>
             </div>
             <!-- Card 4 -->
             <div class="w-60 rounded-xl overflow-hidden shadow-md bg-gray-100">
-                <img src="{{ asset('img/s4.jpg') }}" alt="Family Session" class="w-full h-85 object-cover">
+                <img src="{{ asset('img/s3.jpg') }}" alt="Family Session" class="w-full h-85 object-cover">
                 <div class="p-3 text-center">
                     <p class="font-semibold text-sm">Photo Studio</p>
                 </div>
@@ -96,7 +96,7 @@
             <!-- Card -->
             <div
                 class="relative rounded-2xl shadow-2xl overflow-hidden transform transition hover:scale-105 hover:shadow-lg hover:border-green-400 hover:shadow-green-400 duration-300 backdrop-blur-md bg-white/80 border border-black/20">
-                <img src="{{ asset('img/s4.jpg') }}" alt="silver" class="w-full h-64 object-cover">
+                <img src="{{ asset('img/self1.jpg') }}" alt="silver" class="w-full h-64 object-cover">
                 <div class="p-3 space-y-3">
                     <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-bold text-black flex items-center gap-2">
@@ -127,7 +127,7 @@
             </div>
             <div
                 class=" relative rounded-2xl shadow-2xl overflow-hidden transform transition hover:scale-105 hover:shadow-lg hover:border-green-400 hover:shadow-green-400 duration-300 backdrop-blur-md bg-white/80 border border-black/20">
-                <img src="{{ asset('img/s4.jpg') }}" alt="silver" class="w-full h-64 object-cover">
+                <img src="{{ asset('img/pstudio2.jpg') }}" alt="silver" class="w-full h-64 object-cover">
                 <div class="p-3 space-y-3">
                     <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-bold text-black flex items-center gap-2">
@@ -153,7 +153,7 @@
             </div>
             <div
                 class=" relative rounded-2xl shadow-2xl overflow-hidden transform transition hover:scale-105 hover:shadow-lg hover:border-green-400 hover:shadow-green-400 duration-300 backdrop-blur-md bg-white/80 border border-black/20">
-                <img src="{{ asset('img/s4.jpg') }}" alt="silver" class="w-full h-64 object-cover">
+                <img src="{{ asset('img/pas2.jpg') }}" alt="silver" class="w-full h-64 object-cover">
                 <div class="p-3 space-y-3">
                     <div class="flex items-center justify-between">
                         <h2 class="text-2xl font-bold text-black flex items-center gap-2">
