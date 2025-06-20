@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EditProfilMemberController;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\BookingController;
 use App\Http\Controllers\formPesananController;
@@ -59,6 +60,11 @@ Route::post('/register-member', [registmemberController::class, 'usermember'])->
 Route::get('/dashboard-member', function () {
     return view('member.dashboard-member');
 })->name('member.dashboard');
+
+Route::middleware('auth:member')->group(function () {
+    Route::get('/member/edit', [EditProfilMemberController::class, 'edit'])->name('member.edit');
+    Route::post('/member/update', [EditProfilMemberController::class, 'update'])->name('member.update');
+});
 
 Route::get('/kontak', function () {
     return view('kontak');

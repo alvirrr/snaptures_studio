@@ -83,7 +83,7 @@
 
         <a href="pembayaran"
             class="{{ request()->is('pembayaran') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Pembayaran</a>
-        <a href="member"
+        <a href="member.login"
             class="{{ request()->is('member') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Member</a>
         <a href="kontak"
             class="{{ request()->is('kontak') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Kontak</a>

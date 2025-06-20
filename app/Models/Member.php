@@ -18,6 +18,7 @@ class Member extends Authenticatable
         'password',
         'alamat',
         'wa',
+        'foto',
     ];
 
     protected $hidden = [

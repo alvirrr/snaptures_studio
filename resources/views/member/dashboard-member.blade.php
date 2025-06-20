@@ -15,26 +15,53 @@
 
 <body class="bg-gradient-to-tr from-gray-100 to-gray-300 min-h-screen font-inter">
     <header class="sticky top-0 z-50 bg-neutral-400 shadow-md shadow-neutral-500">
-        <x-navbar />
-        <x-mobile-menu />
+        <x-navbar></x-navbar>
+        <x-mobile-menu></x-mobile-menu>
     </header>
 
+    @php
+        $member = Auth::guard('member')->user();
+    @endphp
+
     <section class="py-12 px-4">
+        {{-- Flash Message --}}
+        @if (session('success'))
+            <div class="max-w-5xl mx-auto mb-4">
+                <div class="bg-green-100 text-green-800 px-4 py-2 rounded-lg shadow">
+                    {{ session('success') }}
+                </div>
+            </div>
+        @endif
+
         <!-- Header Member Info -->
         <div
             class="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start gap-6 transition hover:shadow-2xl">
-            <img src="/img/pas.jpg" alt="Profile"
+            <img src="{{ $member->foto ? asset($member->foto) : asset('/img/default-avatar.png') }}" alt="Profile"
                 class="w-28 h-28 rounded-full border-4 border-blue-500 shadow-lg object-cover">
+
             <div class="flex-1 text-center md:text-left space-y-2">
-                <h2 class="text-2xl font-bold text-gray-800">Muhammad Firman</h2>
-                <p class="text-sm text-gray-600">ID Member: <span class="font-medium text-black">MBR102938</span></p>
-                <p class="text-sm text-gray-600">Email: <span class="font-medium text-black">firman@gmail.com</span></p>
+                <h2 class="text-2xl font-bold text-gray-800">{{ $member->name }}</h2>
+
+                <p class="text-sm text-gray-600">
+                    ID Member: <span class="font-medium">
+                        MBR{{ str_pad($member->id, 6, '0', STR_PAD_LEFT) }}
+                    </span>
+                </p>
+
+                <p class="text-sm text-gray-600">
+                    Email: <span class="font-medium text-black">{{ $member->email }}</span>
+                </p>
+
                 <div class="mt-2 flex justify-center md:justify-start gap-4 text-sm text-blue-600">
-                    <a href="#" class="hover:underline">✏️ Edit Profil</a>
+                    <a href="{{ route('member.edit') }}" class="hover:underline">✏️ Edit Profil</a>
                     <span>|</span>
-                    <a href="#" class="hover:underline text-red-500">🚪 Logout</a>
+                    <form action="{{ route('member.logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="hover:underline text-red-500">🚪 Logout</button>
+                    </form>
                 </div>
             </div>
+
             <div
                 class="text-sm px-4 py-2 bg-gradient-to-r from-yellow-300 to-yellow-400 text-yellow-900 font-semibold rounded-full shadow-sm">
                 🏆 Member Level: <span class="text-yellow-800">Gold</span>
