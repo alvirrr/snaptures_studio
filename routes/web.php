@@ -24,9 +24,20 @@ Route::get('/pembayaran', function () {
     return view('pembayaran');
 });
 
-Route::get('/member', function () {
-    return view('member');
-});
+// Route::get('/member', function () {
+//     return view('member');
+// });
+Route::get('/login-member', function () {
+    return view('member.login-member');
+})->name('member.login');
+
+Route::get('/register-member', function () {
+    return view('member.register-member');
+})->name('member.register');
+
+Route::get('/dashboard-member', function () {
+    return view('member.dashboard-member');
+})->name('member.dashboard');
 
 Route::get('/kontak', function () {
     return view('kontak');
