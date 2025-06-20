@@ -28,29 +28,27 @@
         <div class="w-full max-w-sm p-6 bg-white rounded-xl shadow-md space-y-4 mt-10 mb-10">
             <h2 class="text-2xl font-bold text-center text-gray-800">Login Member</h2>
 
-            <form action="{{ route('member.login') }}" method="POST" class="space-y-4">
+            <form action="{{ route('member.login.submit') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <label for="email">Email</label>
                     <input type="email" name="email" id="email" required
-                        class="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                        class="w-full px-3 py-2 border rounded-lg">
                 </div>
 
                 <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <label for="password">Password</label>
                     <input type="password" name="password" id="password" required
-                        class="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                        class="w-full px-3 py-2 border rounded-lg">
                 </div>
 
                 <button type="submit"
-                    class="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all">
-                    Login
-                </button>
+                    class="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Login</button>
             </form>
 
+
             <p class="text-center text-sm text-gray-600">
-                Belum punya akun? <a href="{{ route('member.register') }}"
-                    class="text-blue-600 hover:underline">Daftar
+                Belum punya akun? <a href="{{ route('member.register') }}" class="text-blue-600 hover:underline">Daftar
                     di sini</a>
             </p>
         </div>

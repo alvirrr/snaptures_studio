@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\BookingController;
 use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
+use App\Http\Controllers\MemberAuthController;
 
 Route::get('/', function () {
     return view('home');
@@ -28,10 +29,25 @@ Route::get('/pembayaran', function () {
 // Route::get('/member', function () {
 //     return view('member');
 // });
+// FORM login member
 Route::get('/login-member', function () {
     return view('member.login-member');
 })->name('member.login');
 
+// PROSES login member
+Route::post('/login-member', [MemberAuthController::class, 'login'])->name('member.login.submit');
+
+// PROSES logout member
+Route::post('/logout-member', [MemberAuthController::class, 'logout'])->name('member.logout');
+
+// Dashboard untuk member (dengan proteksi login)
+Route::middleware('auth:member')->group(function () {
+    Route::get('/member/dashboard', function () {
+        return view('member.dashboard-member');
+    })->name('member.dashboard');
+});
+
+//register member
 Route::get('/register-member', function () {
     return view('member.register-member');
 })->name('member.register');
