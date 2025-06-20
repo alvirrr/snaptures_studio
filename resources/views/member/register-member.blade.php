@@ -67,7 +67,6 @@
                 Sudah punya akun? <a href="{{ route('member.login') }}" class="text-blue-600 hover:underline">Login di
                     sini</a>
             </p>
-
         </div>
     </section>
 </body>

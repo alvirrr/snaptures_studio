@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\BookingController;
 use App\Http\Controllers\formPesananController;
+use App\Http\Controllers\registmemberController;
 
 Route::get('/', function () {
     return view('home');
@@ -34,6 +35,10 @@ Route::get('/login-member', function () {
 Route::get('/register-member', function () {
     return view('member.register-member');
 })->name('member.register');
+
+// POST → Menyimpan data pendaftaran ke database
+Route::post('/register-member', [registmemberController::class, 'usermember'])->name('member.register.store');
+
 
 Route::get('/dashboard-member', function () {
     return view('member.dashboard-member');
