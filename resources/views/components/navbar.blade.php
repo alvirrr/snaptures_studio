@@ -1,94 +1,83 @@
-<nav x-data="{ isOpen: false }" class=" bg-neutral-400 mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 "
+<nav x-data="{ isOpen: false }" class="bg-neutral-400 mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
     aria-label="Global">
+    <!-- Logo -->
     <div class="flex lg:flex-1">
-        <a href="/" class="-m-1.5 p-1.5">
+        <a href="{{ url('/') }}" class="-m-1.5 p-1.5">
             <span class="sr-only">Snapsturesstudio</span>
-            <img class="h-8 w-auto" src="../img/logoss.png" alt="Snapsturesstudio">
+            <img class="h-8 w-auto" src="{{ asset('img/logoss.png') }}" alt="Snapsturesstudio">
         </a>
     </div>
+
+    <!-- Mobile Toggle -->
     <div class="flex lg:hidden">
-        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+        <button @click="isOpen = !isOpen" type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
             <span class="sr-only">Open main menu</span>
-            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                aria-hidden="true" data-slot="icon">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path :class="{ 'hidden': isOpen, 'block': !isOpen }" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </button>
     </div>
-    <div class="hidden lg:flex lg:gap-x-12">
-        <a href="/"
-            class="{{ request()->is('/') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md"
-            aria-current="page">Home</a>
-        <a href="tentang"
-            class="{{ request()->is('tentang') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Tentang</a>
-        <a href="jadwal"
-            class="{{ request()->is('jadwal') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Jadwal</a>
-        <div class="relative">
+
+    <!-- Desktop Menu -->
+    <div class="hidden lg:flex lg:gap-x-8">
+        <a href="{{ url('/') }}"
+            class="{{ request()->is('/') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
+            Home
+        </a>
+        <a href="{{ url('tentang') }}"
+            class="{{ request()->is('tentang') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
+            Tentang
+        </a>
+        <a href="{{ url('jadwal') }}"
+            class="{{ request()->is('jadwal') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
+            Jadwal
+        </a>
+
+        <!-- Dropdown Paket -->
+        <div class="relative" @mouseleave="isOpen = false">
             <button type="button" @click="isOpen = !isOpen"
-                class="flex items-center gap-x-1 {{ request()->is('paket') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md"
-                aria-expanded="false">
+                class="flex items-center gap-x-1 py-1 px-2 text-sm font-semibold rounded-md 
+                           {{ request()->is('paket') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }}">
                 Paket
-                <svg class="size-5 flex-none text-black" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                    data-slot="icon">
+                <svg class="h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
-                        d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                        d="M5.23 7.21a.75.75 0 011.06 0L10 10.92l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
                         clip-rule="evenodd" />
                 </svg>
             </button>
-            <div x-show="isOpen" x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-1"
-                class="absolute top-full -left-8 z-10 mt-1 w-screen max-w-max overflow-hidden rounded-md bg-neutral-300 shadow-lg ring-1 ring-gray-500/5">
-                <div class="p-4">
-                    <div class="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm/6 hover:bg-gray-50">
-                        <div class="flex-auto">
-                            <a href="paket" class="block font-semibold text-gray-900">
-                                All Paket
-                                <span class="absolute inset-0"></span>
-                            </a>
-                            <p class="mt-1 text-gray-600">lihat semua paket</p>
-                        </div>
-                    </div>
-                    <div class="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm/6 hover:bg-gray-50">
-                        <div class="flex-auto">
-                            <a href="selfphoto" class="block font-semibold text-gray-900">
-                                Self Photo
-                                <span class="absolute inset-0"></span>
-                            </a>
-                            <p class="mt-1 text-gray-600">Sesi foto secara mandiri tanpa fotografer</p>
-                        </div>
-                    </div>
-                    <div class="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm/6 hover:bg-gray-50">
-                        <div class="flex-auto">
-                            <a href="photostudio" class="block font-semibold text-gray-900">
-                                Photo Studio
-                                <span class="absolute inset-0"></span>
-                            </a>
-                            <p class="mt-1 text-gray-600">Sesi foto dengan fotografer</p>
-                        </div>
-                    </div>
-                    <div class="group relative flex items-center gap-x-6 rounded-lg p-2 text-sm/6 hover:bg-gray-50">
-                        <div class="flex-auto">
-                            <a href="pasphoto" class="block font-semibold text-gray-900">
-                                Pas Photo
-                                <span class="absolute inset-0"></span>
-                            </a>
-                            <p class="mt-1 text-gray-600">Foto formal berukuran tertentu</p>
-                        </div>
-                    </div>
-                </div>
+            <div x-show="isOpen" x-transition
+                class="absolute top-full left-0 z-20 mt-2 w-56 rounded-md bg-white shadow-lg border">
+                <a href="{{ url('paket') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All
+                    Paket</a>
+                <a href="{{ url('selfphoto') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Self
+                    Photo</a>
+                <a href="{{ url('photostudio') }}"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Photo Studio</a>
+                <a href="{{ url('pasphoto') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Pas
+                    Photo</a>
             </div>
         </div>
 
-        <a href="pembayaran"
-            class="{{ request()->is('pembayaran') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Pembayaran</a>
-        <a href="member.login"
-            class="{{ request()->is('member') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Member</a>
-        <a href="kontak"
-            class="{{ request()->is('kontak') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-1 text-sm/6 font-semibold  rounded-md">Kontak</a>
+        <a href="{{ url('pembayaran') }}"
+            class="{{ request()->is('pembayaran') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
+            Pembayaran
+        </a>
+        <a href="{{ url('login-member') }}"
+            class="{{ request()->is('login-member') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
+            Member
+        </a>
+        <a href="{{ url('kontak') }}"
+            class="{{ request()->is('kontak') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
+            Kontak
+        </a>
     </div>
+
+    <!-- Login -->
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="login" class="text-sm/6 font-semibold text-gray-900">Login <span aria-hidden="true">&rarr;</span></a>
+        <a href="{{ url('login') }}" class="text-sm font-semibold text-gray-900 hover:underline">
+            Login <span aria-hidden="true">&rarr;</span>
+        </a>
     </div>
 </nav>

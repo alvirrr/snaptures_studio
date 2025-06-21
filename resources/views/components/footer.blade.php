@@ -4,7 +4,7 @@
             <!-- Logo dan Deskripsi -->
             <div class="md:col-span-1 space-y-4">
                 <div>
-                    <img src="img/logoss.png" alt="Logo" class="h-6">
+                    <img src="{{ asset('img/logoss.png') }}" alt="Logo" class="h-6">
                 </div>
                 <p class="text-sm text-gray-500">
                     Snaptures Studio adalah penyedia jasa layanan fotografi self photo dan photo studio

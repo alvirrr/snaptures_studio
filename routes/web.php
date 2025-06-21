@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\EditProfilMemberController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KontakController;
 // use App\Http\Controllers\BookingController;
+use App\Http\Controllers\MemberAuthController;
 use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
-use App\Http\Controllers\MemberAuthController;
+use App\Http\Controllers\EditProfilMemberController;
 
 Route::get('/', function () {
     return view('home');
@@ -69,6 +70,7 @@ Route::middleware('auth:member')->group(function () {
 Route::get('/kontak', function () {
     return view('kontak');
 });
+Route::post('/kirim-kontak', [KontakController::class, 'kirim']);
 
 Route::get('/selfphoto', function () {
     return view('selfphoto');

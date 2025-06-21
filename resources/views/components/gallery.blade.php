@@ -36,7 +36,7 @@
             </div>
         </div>
 
-        <div class="filter-item" data-category="shoes">
+        <div class="filter-item" data-category="selfphoto">
             <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100">
                 <img src="{{ asset('img/s3.jpg') }}" alt="Friends Session" class="w-full h-85 object-cover">
                 <div class="p-3 text-center">
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="filter-item" data-category="shoes">
+        <div class="filter-item" data-category="selfphoto">
             <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100">
                 <img src="{{ asset('img/s1.jpg') }}" alt="Friends Session" class="w-full h-85 object-cover">
                 <div class="p-3 text-center">
@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <div class="filter-item" data-category="shoes">
+        <div class="filter-item" data-category="selfphoto">
             <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100">
                 <img src="{{ asset('img/s5.jpg') }}" alt="Friends Session" class="w-full h-85 object-cover">
                 <div class="p-3 text-center">
@@ -81,7 +81,7 @@
             </div>
         </div>
 
-        <div class="filter-item" data-category="shoes">
+        <div class="filter-item" data-category="selfphoto">
             <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100">
                 <img src="{{ asset('img/s6.jpg') }}" alt="Friends Session" class="w-full h-85 object-cover">
                 <div class="p-3 text-center">
