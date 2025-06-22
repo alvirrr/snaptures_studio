@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\Paket;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\KontakController;
 // use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PaketController;
+use App\Http\Controllers\KontakController;
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\MemberAuthController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\formPesananController;
@@ -10,7 +13,8 @@ use App\Http\Controllers\registmemberController;
 use App\Http\Controllers\EditProfilMemberController;
 
 Route::get('/', function () {
-    return view('home');
+    $paket = Paket::first(); // atau bisa pakai where/kategori sesuai kebutuhan
+    return view('home', compact('paket'));
 });
 
 Route::get('/tentang', function () {
@@ -22,7 +26,8 @@ Route::get('/jadwal', function () {
 });
 
 Route::get('/paket', function () {
-    return view('paket');
+    $paket = Paket::first(); // atau bisa pakai where/kategori sesuai kebutuhan
+    return view('paket', compact('paket'));
 });
 
 Route::get('/pembayaran', function () {
@@ -76,16 +81,22 @@ Route::get('/kontak', function () {
 Route::post('/kirim-kontak', [KontakController::class, 'kirim']);
 
 Route::get('/selfphoto', function () {
-    return view('selfphoto');
+    $paket = Paket::first(); // atau bisa pakai where/kategori sesuai kebutuhan
+    return view('selfphoto', compact('paket'));
 });
 
 Route::get('/photostudio', function () {
-    return view('photostudio');
+    $paket = Paket::first(); // atau bisa pakai where/kategori sesuai kebutuhan
+    return view('photostudio', compact('paket'));
 });
 
-Route::get('/pasphoto', function () {
-    return view('pasphoto');
-});
+// Route::get('/pasphoto', function () {
+//     return view('pasphoto');
+// });
+
+Route::get('/pasphoto', [PaketController::class, 'index'])->name('pasphoto');
+Route::get('/formpesanan/{slug}', [PesananController::class, 'create'])->name('formpesanan');
+Route::post('/formpesanan/{slug}', [PesananController::class, 'store'])->name('pesanan.submit');
 
 // Route::get('/login', function () {
 //     return view('login');
@@ -106,9 +117,9 @@ Route::get('/misi', function () {
     return view('misi');
 });
 
-Route::get('/formpesanan', function () {
-    return view('formpesanan');
-});
+// Route::get('/formpesanan', function () {
+//     return view('formpesanan');
+// });
 
 Route::get('/nota', function () {
     return view('nota');

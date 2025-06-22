@@ -47,7 +47,7 @@
                             <li>✔ Free Properti</li>
                         </ul>
                         <div class="text-xl font-semibold text-primary pb-2">Rp 60.000</div>
-                        <a href="formpesanan">
+                        <a href="{{ route('formpesanan', $paket->slug) }}">
                             <button
                                 class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                 Sekarang</button>
@@ -74,7 +74,7 @@
                             <li>✔ Free Properti</li>
                         </ul>
                         <div class="text-xl font-semibold text-primary pb-2">Rp 100.000</div>
-                        <a href="formpesanan">
+                        <a href="{{ route('formpesanan', $paket->slug) }}">
                             <button
                                 class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                 Sekarang</button>
@@ -101,7 +101,7 @@
                             <li>✔ Free Properti</li>
                         </ul>
                         <div class="text-xl font-semibold text-primary pb-2">Rp 180.000</div>
-                        <a href="formpesanan">
+                        <a href="{{ route('formpesanan', $paket->slug) }}">
                             <button
                                 class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                 Sekarang</button>

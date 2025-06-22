@@ -46,7 +46,7 @@
                             <li>✔ Fill On Google Drive</li>
                         </ul>
                         <div class="text-xl font-semibold text-primary pb-2">Rp 200.000</div>
-                        <a href="formpesanan">
+                        <a href="{{ route('formpesanan', $paket->slug) }}">
                             <button
                                 class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                 Sekarang</button>
@@ -72,7 +72,7 @@
                             <li>✔ File On Google Drive</li>
                         </ul>
                         <div class="text-xl font-semibold text-primary pb-2">Rp 300.000</div>
-                        <a href="formpesanan">
+                        <a href="{{ route('formpesanan', $paket->slug) }}">
                             <button
                                 class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                 Sekarang</button>
@@ -99,7 +99,7 @@
                             <li>✔ File On Google drive</li>
                         </ul>
                         <div class="text-xl font-semibold text-primary pb-2">Rp 500.000</div>
-                        <a href="formpesanan">
+                        <a href="{{ route('formpesanan', $paket->slug) }}">
                             <button
                                 class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                 Sekarang</button>

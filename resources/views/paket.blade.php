@@ -211,7 +211,8 @@
                     Studio</button>
                 <button @click="tab = 'pasPhoto'"
                     :class="tab === 'pasPhoto' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'"
-                    class="hover:bg-blue-600 hover:text-white px-4 py-2 rounded-full text-sm font-medium transition  ">Pas Photo</button>
+                    class="hover:bg-blue-600 hover:text-white px-4 py-2 rounded-full text-sm font-medium transition  ">Pas
+                    Photo</button>
             </div>
             {{-- self photo --}}
             <div x-show="tab === 'all' || tab === 'selfPhoto'" id="selfphoto"
@@ -240,7 +241,7 @@
                                 <li>✔ Free Properti</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 60.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>
@@ -268,7 +269,7 @@
                                 <li>✔ Free Properti</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 100.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>
@@ -296,7 +297,7 @@
                                 <li>✔ Free Properti</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 180.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>
@@ -331,7 +332,7 @@
                                 <li>✔ Fill On Google Drive</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 200.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>
@@ -358,7 +359,7 @@
                                 <li>✔ File On Google Drive</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 300.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>
@@ -386,7 +387,7 @@
                                 <li>✔ File On Google drive</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 500.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>
@@ -422,7 +423,7 @@
                                 <li>✔ File Edit</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 20.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>
@@ -453,7 +454,7 @@
                                 <li>✔ 8 Lembar Foto Cetak</li>
                             </ul>
                             <div class="text-xl font-semibold text-primary pb-2">Rp 5.000</div>
-                            <a href="formpesanan">
+                            <a href="{{ route('formpesanan', $paket->slug) }}">
                                 <button
                                     class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                                     Sekarang</button>

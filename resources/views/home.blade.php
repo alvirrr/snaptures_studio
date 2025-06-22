@@ -38,7 +38,7 @@
                     <a href="paket"
                         class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Lihat
                         Paket</a>
-                    <a href="formpesanan"
+                    <a href="{{ route('formpesanan', $paket->slug) }}"
                         class="rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Pesan
                         Sekarang</a>
                 </div>
@@ -117,7 +117,7 @@
 
                     <div class="text-xl font-semibold text-primary pb-2">Rp 60.000</div>
 
-                    <a href="formpesanan">
+                    <a href="{{ route('formpesanan', $paket->slug) }}">
                         <button
                             class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">
                             Pesan Sekarang
@@ -144,7 +144,7 @@
                         <li>✔ Fill On Google Drive</li>
                     </ul>
                     <div class="text-xl font-semibold text-primary pb-2">Rp 200.000</div>
-                    <a href="formpesanan">
+                    <a href="{{ route('formpesanan', $paket->slug) }}">
                         <button
                             class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                             Sekarang</button>
@@ -171,7 +171,7 @@
                         <li>✔ File Edit</li>
                     </ul>
                     <div class="text-xl font-semibold text-primary pb-2">Rp 20.000</div>
-                    <a href="formpesanan">
+                    <a href="{{ route('formpesanan', $paket->slug) }}">
                         <button
                             class="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-medium transition-all">Pesan
                             Sekarang</button>
