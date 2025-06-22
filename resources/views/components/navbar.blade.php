@@ -36,29 +36,46 @@
         </a>
 
         <!-- Dropdown Paket -->
-        <div class="relative" @mouseleave="isOpen = false">
-            <button type="button" @click="isOpen = !isOpen"
-                class="flex items-center gap-x-1 py-1 px-2 text-sm font-semibold rounded-md 
-                           {{ request()->is('paket') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }}">
+        <div x-data="{ openPaket: false }" @mouseleave="openPaket = false" class="relative">
+            <button type="button" @mouseenter="openPaket = true" @click="openPaket = !openPaket"
+                class="flex items-center gap-x-1 py-1 px-3 text-sm font-medium rounded-md transition duration-150 ease-in-out 
+        {{ request()->is('paket') ? 'bg-neutral-600 text-neutral-100' : 'text-gray-900 hover:bg-neutral-300' }}">
                 Paket
-                <svg class="h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
+                <svg :class="{ 'rotate-180': openPaket }"
+                    class="h-4 w-4 transform transition-transform duration-300 text-black" viewBox="0 0 20 20"
+                    fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M5.23 7.21a.75.75 0 011.06 0L10 10.92l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
                         clip-rule="evenodd" />
                 </svg>
             </button>
-            <div x-show="isOpen" x-transition
-                class="absolute top-full left-0 z-20 mt-2 w-56 rounded-md bg-white shadow-lg border">
-                <a href="{{ url('paket') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">All
-                    Paket</a>
-                <a href="{{ url('selfphoto') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Self
-                    Photo</a>
-                <a href="{{ url('photostudio') }}"
-                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Photo Studio</a>
-                <a href="{{ url('pasphoto') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Pas
-                    Photo</a>
+            <div x-show="openPaket" x-transition
+                class="absolute z-30 mt-2 w-56 rounded-lg bg-white border border-gray-200 shadow-md py-2">
+                @php
+                    $routes = [
+                        'paket' => 'All Paket',
+                        'selfphoto' => 'Self Photo',
+                        'photostudio' => 'Photo Studio',
+                        'pasphoto' => 'Pas Photo',
+                    ];
+                @endphp
+
+                @foreach ($routes as $route => $label)
+                    <a href="{{ url($route) }}"
+                        class="group relative block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition">
+                        <span
+                            class="relative z-10 {{ request()->is($route) ? 'text-neutral-700 font-semibold' : '' }}">
+                            {{ $label }}
+                        </span>
+                        <span
+                            class="absolute bottom-1 left-4 h-[2px] w-0 bg-neutral-500 transition-all duration-300 ease-in-out group-hover:w-[calc(100%-2rem)] 
+                    {{ request()->is($route) ? 'w-[calc(100%-2rem)]' : '' }}">
+                        </span>
+                    </a>
+                @endforeach
             </div>
         </div>
+
 
         <a href="{{ url('pembayaran') }}"
             class="{{ request()->is('pembayaran') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">

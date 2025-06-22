@@ -54,7 +54,10 @@
                 <!-- Nomor WhatsApp -->
                 <div>
                     <label for="whatsapp" class="block text-sm font-medium text-gray-700 mb-1">Nomor WhatsApp</label>
-                    <input type="text" id="whatsapp" name="whatsapp" required
+                    <input type="tel" id="whatsapp" name="whatsapp" required
+                        pattern="^(\+62|62|0)8[1-9][0-9]{6,9}$"
+                        title="Masukkan nomor HP yang valid, contoh: 081234567890"
+                        oninput="this.value = this.value.replace(/[^0-9+]/g, '')"
                         class="w-full px-5 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-blue-500 transition duration-300"
                         placeholder="Contoh: 081234567890" />
                 </div>

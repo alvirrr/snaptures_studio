@@ -5,30 +5,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- @vite('resources/css/app.css') --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    {{-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Snapstures Studio</title>
+    <title>Konfirmasi Pembayaran - Snapstures Studio</title>
 </head>
 
 <body>
     <header class="sticky top-0 left-0 right-0 z-50 bg-neutral-400 shadow-md shadow-neutral-500">
         <x-navbar></x-navbar>
-        <!-- Mobile menu -->
         <x-mobile-menu></x-mobile-menu>
     </header>
 
-    <section class="min-h-screen bg-linear-to-t from-neutral-300 to-neutral-500 py-15 px-4">
-        {{-- <h2 class="text-center text-black font-bold">Konfirmasi Pembayaran</h2> --}}
+    <section class="min-h-screen bg-gradient-to-t from-neutral-300 to-neutral-500 py-16 px-4">
         <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
             <h2 class="text-center text-2xl font-bold mb-6 text-gray-800">Konfirmasi Pembayaran</h2>
 
-            <form action="/konfirmasi-pembayaran" method="POST" enctype="multipart/form-data" class="space-y-5">
+            {{-- Alert Success --}}
+            @if (session('success'))
+                <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            {{-- Alert Error --}}
+            @if ($errors->any())
+                <div class="bg-red-100 text-red-800 p-3 rounded mb-4">
+                    <ul class="list-disc pl-5 space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-5">
+                @csrf
+
                 <!-- Nama -->
                 <div>
                     <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
@@ -50,12 +67,14 @@
                     <input type="text" id="bank" name="bank" placeholder="Contoh: BCA A/N Firman" required
                         class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
                 </div>
+
                 <!-- Jumlah Pembayaran -->
                 <div>
                     <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah Pembayaran</label>
                     <input type="number" id="jumlah" name="jumlah" required
                         class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" />
                 </div>
+
                 <!-- Upload Bukti -->
                 <div>
                     <label for="bukti" class="block text-sm font-medium text-gray-700">Upload Bukti Transfer</label>

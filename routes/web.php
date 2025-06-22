@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KontakController;
 // use App\Http\Controllers\BookingController;
 use App\Http\Controllers\MemberAuthController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
 use App\Http\Controllers\EditProfilMemberController;
@@ -26,7 +27,9 @@ Route::get('/paket', function () {
 
 Route::get('/pembayaran', function () {
     return view('pembayaran');
-});
+})->name('pembayaran.form');
+
+Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
 
 // Route::get('/member', function () {
 //     return view('member');
