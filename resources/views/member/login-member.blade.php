@@ -2,14 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- @vite('resources/css/app.css') --}}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    {{-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -31,21 +29,31 @@
             <form action="{{ route('member.login.submit') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
-                    <label for="email">Email</label>
+                    <label for="email" class="block">Email</label>
                     <input type="email" name="email" id="email" required
                         class="w-full px-3 py-2 border rounded-lg">
                 </div>
 
                 <div>
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" required
-                        class="w-full px-3 py-2 border rounded-lg">
+                    <label for="password" class="block">Password</label>
+                    <div x-data="{ show: false }" class="relative">
+                        <input :type="show ? 'text' : 'password'" name="password" id="password" required
+                            class="w-full px-3 py-2 border rounded-lg pr-10">
+                        <button type="button" @click="show = !show"
+                            class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600 focus:outline-none">
+                            <i :class="show ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                        </button>
+                    </div>
+                    <div class="text-right text-sm mt-1">
+                        <a href="{{ route('member.password.request') }}" class="text-blue-600 hover:underline">
+                            Lupa sandi?
+                        </a>
+                    </div>
                 </div>
 
                 <button type="submit"
                     class="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">Login</button>
             </form>
-
 
             <p class="text-center text-sm text-gray-600">
                 Belum punya akun? <a href="{{ route('member.register') }}" class="text-blue-600 hover:underline">Daftar

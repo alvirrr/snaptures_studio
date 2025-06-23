@@ -9,6 +9,11 @@ class Paket extends Model
 {
     protected $fillable = ['nama', 'kategori', 'harga', 'deskripsi', 'gambar', 'slug'];
 
+    // Otomatis cast JSON ke array (deskripsi)
+    protected $casts = [
+        'deskripsi' => 'array',
+    ];
+
     protected static function booted()
     {
         static::creating(function ($paket) {
@@ -16,7 +21,7 @@ class Paket extends Model
             $slug = $baseSlug;
             $counter = 1;
 
-            // pastikan slug unik
+            // Cek slug unik
             while (static::where('slug', $slug)->exists()) {
                 $slug = $baseSlug . '-' . $counter++;
             }

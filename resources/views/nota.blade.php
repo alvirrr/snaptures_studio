@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nota Transaksi - Snapstures Studio</title>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>Nota Transaksi - Snaptures Studio</title>
 
     <style>
         @media print {
@@ -49,9 +50,13 @@
         <x-mobile-menu></x-mobile-menu>
     </header>
 
-    <!-- Nota Transaksi -->
+    @php
+        $data = session('nota_data');
+    @endphp
+
     <section class="py-16 px-4">
         <div id="invoice" class="max-w-lg mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-300">
+
             <h2 class="text-2xl font-bold text-center text-blue-700 mb-6 border-b pb-3">
                 Nota Transaksi Pesanan
             </h2>
@@ -63,16 +68,22 @@
                 <p><strong>Paket:</strong> {{ $data['paket'] }}</p>
                 <p><strong>Tanggal Booking:</strong> {{ $data['tanggal'] }}</p>
                 <p><strong>Jam:</strong> {{ $data['waktu'] }} WIB</p>
-                <p><strong>Total Bayar:</strong> <span class="font-semibold text-lg text-green-700">Rp 100.000</span>
+                <p><strong>Metode Pembayaran:</strong>
+                    {{ $data['pembayaran'] === 'dp' ? 'DP (Rp 50.000)' : 'Lunas' }}
+                </p>
+                <p><strong>Total Bayar:</strong>
+                    <span class="font-semibold text-lg text-green-700">
+                        Rp {{ number_format($data['total_bayar'], 0, ',', '.') }}
+                    </span>
                 </p>
             </div>
 
-            <div class="text-center mt-8">
-                <p class="text-sm text-gray-600">Silahkan melakukan pembayran ke rekening <strong>BRI : 6298 0105 0917
-                        535 AN ACHMAD AGUNG ALFIANTO</strong></p>
-                <p class="text-sm text-gray-600">kirim bukti pembayaran ke menu <a
-                        href="pembayaran"></a><strong>Pembayran</strong></p>
-                <p class="text-sm text-gray-600">Terima kasih telah memesan di <strong>Snaptures Studio</strong>!</p>
+            <div class="text-center mt-8 space-y-2 text-sm text-gray-600">
+                <p>Silakan lakukan pembayaran ke rekening:</p>
+                <p><strong>BRI : 6298 0105 0917 535</strong><br>AN: ACHMAD AGUNG ALFIANTO</p>
+                <p>Upload bukti pembayaran melalui halaman <a href="{{ route('pembayaran') }}"
+                        class="text-blue-600 underline font-semibold">Pembayaran</a></p>
+                <p>Terima kasih telah memesan di <strong>Snapstures Studio</strong>!</p>
             </div>
 
             <!-- Tombol Cetak -->
@@ -85,10 +96,8 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <x-footer class="no-print"></x-footer>
 
-    <!-- Script: Generate Order ID -->
     <script>
         const now = new Date();
         const orderId =

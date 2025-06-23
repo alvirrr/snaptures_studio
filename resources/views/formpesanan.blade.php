@@ -60,6 +60,7 @@
                         class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100" />
                 </div>
 
+
                 <!-- Harga -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Harga</label>
@@ -96,6 +97,28 @@
                         @endforeach
                     </select>
                     @error('waktu')
+                        <p class="text-red-500 text-xs">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Pilihan Pembayaran --}}
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Metode Pembayaran</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="pembayaran" value="dp" required
+                                {{ old('pembayaran') == 'dp' ? 'checked' : '' }}
+                                class="text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <span>Bayar DP Rp 50.000</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="radio" name="pembayaran" value="lunas"
+                                {{ old('pembayaran') == 'lunas' ? 'checked' : '' }}
+                                class="text-blue-600 focus:ring-blue-500 border-gray-300">
+                            <span>Bayar Lunas Rp {{ number_format($paket->harga, 0, ',', '.') }}</span>
+                        </label>
+                    </div>
+                    @error('pembayaran')
                         <p class="text-red-500 text-xs">{{ $message }}</p>
                     @enderror
                 </div>

@@ -2,33 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paket;
 use Illuminate\Http\Request;
 
-class formPesananController extends Controller
+class FormPesananController extends Controller
 {
-    public function submit(Request $request)
+    /** GET /formpesanan/{slug} */
+    public function showForm($slug)
     {
-        $data = $request->validate([
-            'nama' => 'required|string',
-            'no_hp' => 'required|string',
-            'paket' => 'required|string',
-            'tanggal' => 'required|date',
-            'waktu' => 'required|string',
-        ]);
+        $paket = Paket::where('slug', $slug)->firstOrFail();
 
-        session(['pesanan' => $data]);
-
-        return redirect()->route('nota');
+        return view('formpesanan', compact('paket'));   // slug tak wajib dikirim lagi
     }
 
-    public function nota()
+    /** POST /kirim-pesanan */
+    public function submitForm(Request $request)
     {
-        $data = session('pesanan');
+        // 1. Validasi
+        $validated = $request->validate([
+            'nama'       => 'required|string|max:255',
+            'no_hp'      => 'required|string|max:20',
+            'paket_id'   => 'required|exists:pakets,id',
+            'tanggal'    => 'required|date',
+            'waktu'      => 'required|string',
+            'pembayaran' => 'required|in:dp,lunas',
+        ]);
 
-        if (!$data) {
-            return redirect('/');
-        }
+        // 2. Ambil detail paket sekali saja
+        $paket = Paket::findOrFail($validated['paket_id']);
 
-        return view('nota', compact('data'));
+        // 3. Hitung total bayar
+        $totalBayar = $validated['pembayaran'] === 'dp' ? 50000 : $paket->harga;
+
+        // 4. Susun data untuk nota
+        $notaData = [
+            'nama'        => $validated['nama'],
+            'no_hp'       => $validated['no_hp'],
+            'paket'       => $paket->nama,
+            'harga'       => $paket->harga,
+            'pembayaran'  => $validated['pembayaran'],
+            'tanggal'     => $validated['tanggal'],
+            'waktu'       => $validated['waktu'],
+            'total_bayar' => $totalBayar,
+        ];
+
+        // 5. Simpan ke session & redirect
+        $request->session()->put('nota_data', $notaData);
+
+        return redirect()->route('nota');
     }
 }

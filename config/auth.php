@@ -103,6 +103,16 @@ return [
             'throttle' => 60,
         ],
     ],
+    // baru unttuk member
+    'passwords' => [
+        'members' => [
+            'provider' => 'members',            // Provider user (biasanya 'users')
+            'table' => 'password_resets',     // Nama tabel di database untuk menyimpan token reset
+            'expire' => 60,                   // Token berlaku 60 menit
+            'throttle' => 60,                 // Waktu tunggu sebelum bisa minta ulang link reset
+        ],
+    ],
+
 
     /*
     |--------------------------------------------------------------------------
