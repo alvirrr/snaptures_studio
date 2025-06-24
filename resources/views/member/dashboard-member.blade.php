@@ -43,21 +43,27 @@
                 <h2 class="text-2xl font-bold text-gray-800">{{ $member->name }}</h2>
 
                 <p class="text-sm text-gray-600">
-                    ID Member: <span class="font-medium">
-                        MBR{{ str_pad($member->id, 6, '0', STR_PAD_LEFT) }}
-                    </span>
+                    ID Member:
+                    <span class="font-medium">MBR{{ str_pad($member->id, 6, '0', STR_PAD_LEFT) }}</span>
                 </p>
 
                 <p class="text-sm text-gray-600">
-                    Email: <span class="font-medium text-black">{{ $member->email }}</span>
+                    Email:
+                    <span class="font-medium text-black">{{ $member->email }}</span>
                 </p>
 
-                <div class="mt-2 flex justify-center md:justify-start gap-4 text-sm text-blue-600">
-                    <a href="{{ route('member.edit') }}" class="hover:underline">✏️ Edit Profil</a>
-                    <span>|</span>
-                    <form action="{{ route('member.logout') }}" method="POST" class="inline">
+                <div class="mt-4 flex justify-center md:justify-start gap-3">
+                    <a href="{{ route('member.edit') }}"
+                        class="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-full shadow transition duration-300">
+                        <i class="fas fa-user-edit"></i> Edit Profil
+                    </a>
+
+                    <form action="{{ route('member.logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="hover:underline text-red-500">🚪 Logout</button>
+                        <button type="submit"
+                            class="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-2 px-4 rounded-full shadow transition duration-300">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
                     </form>
                 </div>
             </div>
@@ -70,7 +76,21 @@
 
         <!-- Menu Cards -->
         <div class="max-w-5xl mx-auto mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Card 1 -->
+            <!-- Card 1 - Buat Pemesanan -->
+            <div
+                class="bg-white rounded-2xl shadow-md p-6 hover:-translate-y-1 hover:shadow-lg transition duration-300 ease-in-out">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-gray-800">Buat Pemesanan</h3>
+                    <i class="fas fa-camera text-purple-500 text-lg"></i>
+                </div>
+                <p class="text-sm text-gray-600">Pesan paket foto langsung dari akun member Anda.</p>
+                <a href="{{ route('member.pilihpaket') }}"
+                    class="inline-block mt-4 text-blue-600 hover:underline text-sm">
+                    Pilih Paket
+                </a>
+            </div>
+
+            <!-- Card 2 - Riwayat Pemesanan -->
             <div
                 class="bg-white rounded-2xl shadow-md p-6 hover:-translate-y-1 hover:shadow-lg transition duration-300 ease-in-out">
                 <div class="flex items-center justify-between mb-4">
@@ -81,7 +101,7 @@
                 <a href="#" class="inline-block mt-4 text-blue-600 hover:underline text-sm">Lihat Detail</a>
             </div>
 
-            <!-- Card 2 -->
+            <!-- Card 3 - Poin Member -->
             <div
                 class="bg-white rounded-2xl shadow-md p-6 hover:-translate-y-1 hover:shadow-lg transition duration-300 ease-in-out">
                 <div class="flex items-center justify-between mb-4">
@@ -92,7 +112,7 @@
                 <a href="#" class="inline-block mt-4 text-blue-600 hover:underline text-sm">Cek Penukaran</a>
             </div>
 
-            <!-- Card 3 -->
+            <!-- Card 4 - Voucher & Bonus -->
             <div
                 class="bg-white rounded-2xl shadow-md p-6 hover:-translate-y-1 hover:shadow-lg transition duration-300 ease-in-out">
                 <div class="flex items-center justify-between mb-4">

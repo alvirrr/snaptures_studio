@@ -11,6 +11,7 @@ use App\Http\Controllers\MemberAuthController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
+use App\Http\Controllers\MemberPemesananController;
 use App\Http\Controllers\EditProfilMemberController;
 use App\Http\Controllers\Member\ResetPasswordController;
 use App\Http\Controllers\Member\ForgotPasswordController;
@@ -84,7 +85,7 @@ Route::post('/member/lupa-password', [ForgotPasswordController::class, 'sendRese
 // Route reset form
 Route::get('/member/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
     ->name('password.reset');  // ← alias default Laravel
-   // ->name('member.password.reset'); // tetap bisa pakai yang lama
+// ->name('member.password.reset'); // tetap bisa pakai yang lama
 
 // Route post reset
 Route::post('/member/reset-password', [ResetPasswordController::class, 'reset'])
@@ -183,3 +184,17 @@ Route::get('/nota', function (Request $request) {
 Route::get('/pembayaran', function () {
     return view('pembayaran');
 })->name('pembayaran');
+
+
+// Pilih Paket dari Dashboard
+Route::middleware(['auth:member'])->group(function () {
+    Route::get('/member/pilih-paket', [MemberPemesananController::class, 'pilihPaket'])->name('member.pilihpaket');
+    Route::get('/member/pemesanan/{paket}', [MemberPemesananController::class, 'formPemesanan'])->name('member.formpesanan');
+
+    // Tambah route post:
+    Route::post('/member/pemesanan', [MemberPemesananController::class, 'store'])->name('member.pesanan.store');
+
+
+    // Route untuk nota:
+    Route::get('/member/pesanan/nota/{id}', [MemberPemesananController::class, 'showNota'])->name('member.pesanan.nota');
+});
