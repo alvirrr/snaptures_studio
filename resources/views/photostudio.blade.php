@@ -29,7 +29,7 @@
         <div class="max-w-5xl mx-auto bg-gradient-to-t from-fuchsia-500 to-indigo-500 rounded-2xl my-5 p-8">
             <h2 class="text-center text-2xl font-semibold text-black py-5">Paket Photo Studio</h2>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-10 sm:p-3">
                 {{-- LOOP semua paket --}}
                 @foreach ($pakets as $paket)
                     <div

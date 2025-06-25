@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Paket;
+use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\BookingController;
@@ -11,10 +12,17 @@ use App\Http\Controllers\MemberAuthController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\MemberPemesananController;
 use App\Http\Controllers\EditProfilMemberController;
+use App\Http\Controllers\Admin\RegistAdminController;
+use App\Http\Controllers\Dasboard\MenuMemberController;
 use App\Http\Controllers\Member\ResetPasswordController;
+use App\Http\Controllers\Admin\PembayaranAdminController;
 use App\Http\Controllers\Member\ForgotPasswordController;
+use App\Http\Controllers\Admin\LupaPasswordAdminController;
+use App\Http\Controllers\Dasboard\MenuPaketController;
 
 Route::get('/', function () {
     $paket = Paket::first(); // atau bisa pakai where/kategori sesuai kebutuhan
@@ -70,9 +78,9 @@ Route::get('/register-member', function () {
 Route::post('/register-member', [registmemberController::class, 'usermember'])->name('member.register.store');
 
 
-Route::get('/dashboard-member', function () {
-    return view('member.dashboard-member');
-})->name('member.dashboard');
+// Route::get('/dashboard-member', function () {
+//     return view('member.dashboard-member');
+// })->name('member.dashboard');
 
 Route::middleware('auth:member')->group(function () {
     Route::get('/member/edit', [EditProfilMemberController::class, 'edit'])->name('member.edit');
@@ -197,4 +205,74 @@ Route::middleware(['auth:member'])->group(function () {
 
     // Route untuk nota:
     Route::get('/member/pesanan/nota/{id}', [MemberPemesananController::class, 'showNota'])->name('member.pesanan.nota');
+});
+
+
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+// // user admin
+// Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+//     Route::get('/pembayaran', [PembayaranAdminController::class, 'index'])->name('admin.pembayaran.index');
+//     Route::post('/pembayaran/{id}/verifikasi', [PembayaranAdminController::class, 'verifikasi'])->name('admin.pembayaran.verifikasi');
+// });
+
+
+// Route::get('/admin', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+// Route::post('/admin', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+// Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+
+// PROSES login Admin
+Route::get('/login-admin', function () {
+    return view('admin.login-admin');
+})->name('admin.login');
+Route::post('/login-admin', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+
+// PROSES logout Admin
+Route::post('/logout-admin', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+//register Admin
+Route::get('/register-admin', function () {
+    return view('admin.register-admin');
+})->name('admin.register');
+
+// POST → Menyimpan data pendaftaran ke database
+Route::post('/register-admin', [RegistAdminController::class, 'useradmin'])->name('admin.register.store');
+
+// lupa password admin
+Route::get('/admin/lupa-password', [LupaPasswordAdminController::class, 'showLinkRequestForm'])->name('admin.password.request');
+Route::post('/admin/lupa-password', [LupaPasswordAdminController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+
+// Dashboard Admin
+// Route::get('/dashboard-admin', function () {
+//     return view('admin.dashboard');
+// })->name('admin.dashboard');
+
+// Dashboard untuk admin (dengan proteksi login)
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+});
+// Menu Dashboard Admin
+// Route::get('/admin/member', function () {
+//     $members = Member::all(); // atau paginate jika banyak
+//     return view('admin.member', compact('members'));
+// })->name('admin.members');
+
+Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(function () {
+    Route::get('/member', [MenuMemberController::class, 'index'])->name('members');
+    Route::get('/member/{id}/edit', [MenuMemberController::class, 'edit'])->name('members.edit');
+    Route::put('/member/{id}', [MenuMemberController::class, 'update'])->name('members.update');
+    Route::delete('/member/{id}', [MenuMemberController::class, 'destroy'])->name('members.destroy');
+});
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/paket', [MenuPaketController::class, 'index'])->name('admin.paket');
+    Route::get('/paket/{id}/edit', [MenuPaketController::class, 'edit'])->name('admin.paket.edit');
+    Route::put('/paket/{id}', [MenuPaketController::class, 'update'])->name('admin.paket.update');
+    Route::delete('/paket/{id}', [MenuPaketController::class, 'destroy'])->name('admin.paket.destroy');
+    Route::get('/paket/tambah', [MenuPaketController::class, 'create'])->name('admin.paket.create');
+    Route::post('/paket', [MenuPaketController::class, 'store'])->name('admin.paket.store');
 });
