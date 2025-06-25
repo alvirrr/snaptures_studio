@@ -93,7 +93,7 @@
 
     <!-- Login -->
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="{{ url('login') }}" class="text-sm font-semibold text-gray-900 hover:underline">
+        <a href="{{ url('login-admin') }}" class="text-sm font-semibold text-gray-900 hover:underline">
             Login <span aria-hidden="true">&rarr;</span>
         </a>
     </div>

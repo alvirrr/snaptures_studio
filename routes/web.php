@@ -5,33 +5,36 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\BookingController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\PesananController;
+use App\Http\Controllers\TentangController;
 use App\Http\Controllers\MemberAuthController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
 use App\Http\Controllers\Admin\AdminAuthController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\MemberPemesananController;
 use App\Http\Controllers\EditProfilMemberController;
 use App\Http\Controllers\Admin\RegistAdminController;
-use App\Http\Controllers\Dasboard\MenuMemberController;
+use App\Http\Controllers\Dashboard\MenuPaketController;
+use App\Http\Controllers\Dashboard\MenuMemberController;
 use App\Http\Controllers\Member\ResetPasswordController;
 use App\Http\Controllers\Admin\PembayaranAdminController;
 use App\Http\Controllers\Member\ForgotPasswordController;
 use App\Http\Controllers\Admin\LupaPasswordAdminController;
-use App\Http\Controllers\Dasboard\MenuPaketController;
+use App\Http\Controllers\Dashboard\MenuPortofolioController;
 
 Route::get('/', function () {
     $paket = Paket::first(); // atau bisa pakai where/kategori sesuai kebutuhan
     return view('home', compact('paket'));
 });
 
-Route::get('/tentang', function () {
-    return view('tentang');
-});
+// Route::get('/tentang', function () {
+//     return view('tentang');
+// });
+Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
 
 Route::get('/jadwal', function () {
     return view('jadwal');
@@ -275,4 +278,16 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::delete('/paket/{id}', [MenuPaketController::class, 'destroy'])->name('admin.paket.destroy');
     Route::get('/paket/tambah', [MenuPaketController::class, 'create'])->name('admin.paket.create');
     Route::post('/paket', [MenuPaketController::class, 'store'])->name('admin.paket.store');
+});
+
+
+Route::get('/galeri', [UserController::class, 'gallery'])->name('galeri');
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/portofolio', [MenuPortofolioController::class, 'index'])->name('admin.portofolio');
+    Route::get('/portofolio/create', [MenuPortofolioController::class, 'create'])->name('admin.portofolio.create');
+    Route::post('/portofolio', [MenuPortofolioController::class, 'store'])->name('admin.portofolio.store');
+    Route::get('/portofolio/{portofolio}/edit', [MenuPortofolioController::class, 'edit'])->name('admin.portofolio.edit');
+    Route::put('/portofolio/{portofolio}', [MenuPortofolioController::class, 'update'])->name('admin.portofolio.update');
+    Route::delete('/portofolio/{portofolio}', [MenuPortofolioController::class, 'destroy'])->name('admin.portofolio.destroy');
 });

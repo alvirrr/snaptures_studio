@@ -96,7 +96,7 @@
         </div>
     </section>
 
-    <x-gallery></x-gallery>
+    <x-gallery :items="$portofolios" />
     <x-properti></x-properti>
     <x-background></x-background>
     <x-maps></x-maps>

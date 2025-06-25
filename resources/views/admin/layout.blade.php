@@ -27,7 +27,7 @@
                     class="fas fa-users mr-2"></i> Member</a>
             <a href="{{ route('admin.paket') }}" class="block px-6 py-2 hover:bg-blue-100"><i
                     class="fas fa-box mr-2"></i> Paket</a>
-            <a href="" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-image mr-2"></i> Portofolio</a>
+            <a href="{{ route('admin.portofolio') }}" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-image mr-2"></i> Portofolio</a>
             <a href="" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-chart-line mr-2"></i>
                 Laporan</a>
             <a href="" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-camera mr-2"></i> Studio</a>
