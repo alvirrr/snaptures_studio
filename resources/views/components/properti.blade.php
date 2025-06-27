@@ -1,100 +1,70 @@
+@props(['items'])
+
 <section class="py-20 bg-gradient-to-t from-neutral-200 to-neutral-100">
-    <h2 class="text-shadow-md text-3xl md:text-3xl font-extrabold text-center text-gray-800 mb-5">
-        Properti Snaptures Studio</h2>
-    {{-- <div class="flex items-center justify-center py-4 md:py-5 sm:py-3 flex-wrap">
-        <button type="button" data-filter="all"
-            class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-2xl text-base font-md px-5 md:px-3 sm:px-2 sm:text-sm py-2.5 text-center me-3 mb-3">All
-        </button>
-        <button type="button" data-filter="selfphoto"
-            class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-2xl text-base font-md px-5 md:px-3 sm:px-2 sm:text-sm py-2.5 text-center me-3 mb-3">Self
-            Photo</button>
-        <button type="button" data-filter="photostudio"
-            class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-2xl text-base font-md px-5 md:px-3 sm:px-2 sm:text-sm py-2.5 text-center me-3 mb-3">Photo
-            Studio</button>
-        <button type="button" data-filter="pasphoto"
-            class="filter-btn text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-2xl text-base font-md px-5 md:px-3 sm:px-2 sm:text-sm py-2.5 text-center me-3 mb-3">Pas
-            Photo</button>
-    </div> --}}
-    {{-- Properto --}}
-    <div class="flex flex-wrap justify-center gap-3 px-3 md:px-20 py-4">
-        <!-- Card 1 -->
-        <div class="filter-item" data-category="properti">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100">
-                <img src="{{ asset('img/properti1.jpg') }}" alt="Friends Session" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Properti</p>
-                </div>
-            </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="filter-item" data-category="properti">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100">
-                <img src="{{ asset('img/properti2.jpg') }}" alt="Friends Session" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Properti</p>
-                </div>
-            </div>
-        </div>
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Gallery Properti Snapstures Studio</h2>
 
-        <div class="filter-item" data-category="shoes">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100">
-                <img src="{{ asset('img/properti3.jpg') }}" alt="Friends Session" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Properti</p>
-                </div>
-            </div>
-        </div>
+    <!-- Filter Buttons -->
+    <div class="flex items-center justify-center flex-wrap gap-3 mb-10">
+        @foreach (['all' => 'All', 'selfphoto' => 'Self Photo', 'photostudio' => 'Photo Studio', 'pasphoto' => 'Pas Photo'] as $filter => $label)
+            <button type="button" data-filter="{{ $filter }}"
+                class="filter-btn px-4 py-2 rounded-full text-sm font-medium border transition duration-200
+                {{ $filter === 'all' ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-blue-600 border-blue-600 hover:bg-blue-700 hover:text-white hover:border-blue-700' }}">
+                {{ $label }}
+            </button>
+        @endforeach
+    </div>
 
-        <!-- Modal Fullscreen -->
-        <div id="imageModal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
-            <span id="closeModal"
-                class="absolute top-6 p-1 bg-red-300 hover:bg-red-500 right-6 text-white text-2xl font-bold cursor-pointer select-none">&times;</span>
-            <img id="modalImage" class="max-w-3xl max-h-[90vh] rounded-lg shadow-lg shadow-white border-black border"
-                src="" alt="Full Image">
-        </div>
-
-        <script>
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const items = document.querySelectorAll('.filter-item');
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImage');
-            const closeModal = document.getElementById('closeModal');
-
-            // Filtering logic
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const filterValue = button.getAttribute('data-filter');
-
-                    items.forEach(item => {
-                        const category = item.getAttribute('data-category');
-                        item.style.display = (filterValue === 'all' || category === filterValue) ?
-                            'block' : 'none';
-                    });
-                });
-            });
-
-            // Open modal on image click
-            items.forEach(item => {
-                const img = item.querySelector('img');
-                img.addEventListener('click', () => {
-                    modalImg.src = img.src;
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                });
-            });
-
-            // Close modal
-            closeModal.addEventListener('click', () => {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden');
-            });
-
-            // Close modal on outside click
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('flex');
-                    modal.classList.add('hidden');
-                }
-            });
-        </script>
+    <!-- Gallery Content -->
+    <div id="gallery-content">
+        @include('components.partials.properti-item', ['propertis' => $items])
+    </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const galleryContent = document.getElementById("gallery-content");
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-blue-700', 'text-white',
+                    'border-blue-700');
+                    btn.classList.add('bg-white', 'text-blue-600', 'border-blue-600');
+                });
+
+                button.classList.remove('bg-white', 'text-blue-600', 'border-blue-600');
+                button.classList.add('bg-blue-700', 'text-white', 'border-blue-700');
+
+                const filter = button.getAttribute('data-filter');
+                const items = document.querySelectorAll('.filter-item');
+                items.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    item.style.display = (filter === 'all' || filter === category) ?
+                        'block' : 'none';
+                });
+            });
+        });
+
+        // AJAX Pagination
+        galleryContent.addEventListener('click', function(e) {
+            if (e.target.closest('.pagination a')) {
+                e.preventDefault();
+                const url = e.target.closest('a').getAttribute('href');
+                fetch(url, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(res => res.text())
+                    .then(html => {
+                        galleryContent.innerHTML = html;
+                        window.scrollTo({
+                            top: galleryContent.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    });
+            }
+        });
+    });
+</script>

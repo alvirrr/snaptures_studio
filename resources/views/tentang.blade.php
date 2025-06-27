@@ -97,10 +97,12 @@
     </section>
 
     <x-gallery :items="$portofolios" />
-    <x-properti></x-properti>
-    <x-background></x-background>
-    <x-maps></x-maps>
 
+    <x-properti :items="$items" />
+
+    <x-background :items="$backgrounds" />
+    
+    <x-maps></x-maps>
 
     <x-footer></x-footer>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>

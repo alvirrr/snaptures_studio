@@ -1,94 +1,71 @@
-<section class="py-20 bg-gradient-to-t from-neutral-100 to-neutral-10">
-    <h2 class="text-shadow-md text-3xl md:text-3xl font-extrabold text-center text-gray-800 mb-5">
-        Background Snaptures Studio
-    </h2>
+@props(['items'])
 
-    <div class="flex flex-wrap justify-center gap-3 px-3 md:px-20 py-4">
-        <!-- Card 1 -->
-        <div class="filter-item" data-category="background">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100 cursor-pointer">
-                <img src="img/bg1.jpg" alt="Background 1" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Background</p>
-                </div>
-            </div>
-        </div>
+<section class="py-20 bg-gradient-to-t from-neutral-200 to-neutral-100">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Background Snapstures Studio</h2>
 
-        <div class="filter-item" data-category="background">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100 cursor-pointer">
-                <img src="img/bg2.jpg" alt="Background 1" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Background</p>
-                </div>
-            </div>
-        </div>
+    <!-- Filter Buttons -->
+    <div class="flex items-center justify-center flex-wrap gap-3 mb-10">
+        @foreach (['all' => 'All-bg', 'bg-selfphoto' => 'bg-Self Photo', 'bg-photostudio' => 'bg-Photo Studio', 'bg-pasphoto' => 'bg-Pas Photo'] as $filter => $label)
+            <button type="button" data-filter="{{ $filter }}"
+                class="filter-btn px-4 py-2 rounded-full text-sm font-medium border transition duration-200
+                {{ $filter === 'all' ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-blue-600 border-blue-600 hover:bg-blue-700 hover:text-white hover:border-blue-700' }}">
+                {{ $label }}
+            </button>
+        @endforeach
+    </div>
 
-        <div class="filter-item" data-category="background">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100 cursor-pointer">
-                <img src="img/bg3.jpg" alt="Background 1" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Background</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="filter-item" data-category="background">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100 cursor-pointer">
-                <img src="img/bg4.jpg" alt="Background 1" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Background</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="filter-item" data-category="background">
-            <div class="w-72 rounded-xl overflow-hidden shadow-black shadow-md bg-gray-100 cursor-pointer">
-                <img src="img/bg5.jpg" alt="Background 1" class="w-full h-85 object-cover">
-                <div class="p-3 text-center">
-                    <p class="font-semibold text-sm">Background</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal Fullscreen -->
-        <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center z-50">
-            <span id="closeModal"
-                class="absolute top-6 right-6 bg-red-500 hover:bg-red-700 text-white text-3xl font-bold rounded-full px-3 py-1 cursor-pointer select-none">
-                &times;
-            </span>
-            <img id="modalImage"
-                class="max-w-full max-h-screen rounded-lg shadow-lg transition duration-300 ease-in-out border-4 border-white"
-                src="" alt="Fullscreen Image">
-        </div>
+    <!-- Gallery Content to Replace -->
+    <div id="gallery-content">
+        @include('components.partials.background-item', ['backgrounds' => $items])
+    </div>
 </section>
 
-<!-- SCRIPT -->
+<!-- JS: Filter + Pagination -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImage");
-        const closeModal = document.getElementById("closeModal");
+    document.addEventListener('DOMContentLoaded', () => {
+        const galleryContent = document.getElementById("gallery-content");
+        const filterButtons = document.querySelectorAll('.filter-btn');
 
-        // Select all images inside .filter-item
-        const images = document.querySelectorAll(".filter-item img");
+        // Filter handling
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-blue-700', 'text-white',
+                        'border-blue-700');
+                    btn.classList.add('bg-white', 'text-blue-600', 'border-blue-600');
+                });
 
-        images.forEach(img => {
-            img.addEventListener("click", () => {
-                modalImg.src = img.src;
-                modal.classList.remove("hidden");
-                modal.classList.add("flex");
+                button.classList.remove('bg-white', 'text-blue-600', 'border-blue-600');
+                button.classList.add('bg-blue-700', 'text-white', 'border-blue-700');
+
+                const filter = button.getAttribute('data-filter');
+                const items = document.querySelectorAll('.filter-item');
+                items.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    item.style.display = (filter === 'all' || filter === category) ?
+                        'block' : 'none';
+                });
             });
         });
 
-        closeModal.addEventListener("click", () => {
-            modal.classList.remove("flex");
-            modal.classList.add("hidden");
-        });
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.classList.remove("flex");
-                modal.classList.add("hidden");
+        // AJAX Pagination
+        galleryContent.addEventListener('click', function(e) {
+            if (e.target.closest('.pagination a')) {
+                e.preventDefault();
+                const url = e.target.closest('a').getAttribute('href');
+                fetch(url, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(res => res.text())
+                    .then(html => {
+                        galleryContent.innerHTML = html;
+                        window.scrollTo({
+                            top: galleryContent.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    });
             }
         });
     });

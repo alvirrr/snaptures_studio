@@ -14,6 +14,7 @@ use App\Http\Controllers\MemberAuthController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
+use App\Http\Controllers\JadwalBookingController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\MemberPemesananController;
 use App\Http\Controllers\EditProfilMemberController;
@@ -23,7 +24,9 @@ use App\Http\Controllers\Dashboard\MenuMemberController;
 use App\Http\Controllers\Member\ResetPasswordController;
 use App\Http\Controllers\Admin\PembayaranAdminController;
 use App\Http\Controllers\Member\ForgotPasswordController;
+use App\Http\Controllers\Dashboard\MenuPropertiController;
 use App\Http\Controllers\Admin\LupaPasswordAdminController;
+use App\Http\Controllers\Dashboard\MenuBackgroundController;
 use App\Http\Controllers\Dashboard\MenuPortofolioController;
 
 Route::get('/', function () {
@@ -35,6 +38,10 @@ Route::get('/', function () {
 //     return view('tentang');
 // });
 Route::get('/tentang', [TentangController::class, 'index'])->name('tentang');
+
+Route::get('/tentang/portofolio', [TentangController::class, 'loadPortofolio'])->name('tentang.portofolio');
+Route::get('/tentang/properti', [TentangController::class, 'loadProperti'])->name('tentang.properti');
+Route::get('/tentang/background', [TentangController::class, 'loadBackground'])->name('tentang.background');
 
 Route::get('/jadwal', function () {
     return view('jadwal');
@@ -280,7 +287,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::post('/paket', [MenuPaketController::class, 'store'])->name('admin.paket.store');
 });
 
-
+// portofolio
 Route::get('/galeri', [UserController::class, 'gallery'])->name('galeri');
 
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
@@ -291,3 +298,32 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::put('/portofolio/{portofolio}', [MenuPortofolioController::class, 'update'])->name('admin.portofolio.update');
     Route::delete('/portofolio/{portofolio}', [MenuPortofolioController::class, 'destroy'])->name('admin.portofolio.destroy');
 });
+
+// properti
+//Route::get('/properti', [UserController::class, 'property'])->name('properti');
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/properti', [MenuPropertiController::class, 'index'])->name('admin.properti');
+    Route::get('/properti/create', [MenuPropertiController::class, 'create'])->name('admin.properti.create');
+    Route::post('/properti', [MenuPropertiController::class, 'store'])->name('admin.properti.store');
+    Route::get('/properti/{properti}/edit', [MenuPropertiController::class, 'edit'])->name('admin.properti.edit');
+    Route::put('/properti/{properti}', [MenuPropertiController::class, 'update'])->name('admin.properti.update');
+    Route::delete('/properti/{properti}', [MenuPropertiController::class, 'destroy'])->name('admin.properti.destroy');
+});
+
+// Background
+//Route::get('/properti', [UserController::class, 'property'])->name('properti');
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/background', [MenuBackgroundController::class, 'index'])->name('admin.background');
+    Route::get('/background/create', [MenuBackgroundController::class, 'create'])->name('admin.background.create');
+    Route::post('/background', [MenuBackgroundController::class, 'store'])->name('admin.background.store');
+    Route::get('/background/{background}/edit', [MenuBackgroundController::class, 'edit'])->name('admin.background.edit');
+    Route::put('/background/{background}', [MenuBackgroundController::class, 'update'])->name('admin.background.update');
+    Route::delete('/background/{background}', [MenuBackgroundController::class, 'destroy'])->name('admin.background.destroy');
+});
+
+
+Route::get('/jadwal-booking', [JadwalBookingController::class, 'index'])->name('jadwal.index');
+Route::post('/jadwal-booking', [JadwalBookingController::class, 'store'])->name('jadwal.store');
+Route::get('/cek-jam/{tanggal}', [JadwalBookingController::class, 'cekJam'])->name('cek.jam');

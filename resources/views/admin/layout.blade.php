@@ -16,29 +16,50 @@
 <body class="flex bg-neutral-100 min-h-screen text-gray-800">
 
     <!-- Sidebar -->
+    <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-md fixed h-full z-40">
         <div class="p-6 text-2xl font-bold text-center text-blue-600 border-b border-gray-200">
             Admin Panel
         </div>
         <nav class="mt-6 space-y-2 text-sm">
-            <a href="{{ route('admin.dashboard') }}" class="block px-6 py-2 hover:bg-blue-100"><i
-                    class="fas fa-home mr-2"></i> Beranda</a>
-            <a href="{{ route('admin.members') }}" class="block px-6 py-2 hover:bg-blue-100"><i
-                    class="fas fa-users mr-2"></i> Member</a>
-            <a href="{{ route('admin.paket') }}" class="block px-6 py-2 hover:bg-blue-100"><i
-                    class="fas fa-box mr-2"></i> Paket</a>
-            <a href="{{ route('admin.portofolio') }}" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-image mr-2"></i> Portofolio</a>
-            <a href="" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-chart-line mr-2"></i>
-                Laporan</a>
-            <a href="" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-camera mr-2"></i> Studio</a>
-            <a href="" class="block px-6 py-2 hover:bg-blue-100"><i class="fas fa-cog mr-2"></i> Pengaturan</a>
-            <form method="POST" action="" class="px-6 mt-4">
+            <a href="{{ route('admin.dashboard') }}" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-home mr-2"></i> Beranda
+            </a>
+            <a href="{{ route('admin.members') }}" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-users mr-2"></i> Member
+            </a>
+            <a href="{{ route('admin.paket') }}" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-box mr-2"></i> Paket
+            </a>
+            <a href="{{ route('admin.portofolio') }}" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-image mr-2"></i> Portofolio
+            </a>
+
+            <a href="{{ route('admin.properti') }}" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-hat-cowboy mr-2"></i> Properti
+            </a>
+            <a href="{{ route('admin.background') }}" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-layer-group mr-2"></i> Background
+            </a>
+
+            <a href="#" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-chart-line mr-2"></i> Laporan
+            </a>
+            <a href="#" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-camera mr-2"></i> Studio
+            </a>
+            <a href="#" class="block px-6 py-2 hover:bg-blue-100">
+                <i class="fas fa-cog mr-2"></i> Pengaturan
+            </a>
+            <form method="POST" action="#" class="px-6 mt-4">
                 @csrf
-                <button type="submit" class="w-full text-left py-2 hover:bg-red-100 text-red-600"><i
-                        class="fas fa-sign-out-alt mr-2"></i> Logout</button>
+                <button type="submit" class="w-full text-left py-2 hover:bg-red-100 text-red-600">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                </button>
             </form>
         </nav>
     </aside>
+
 
     <!-- Konten Utama -->
     <main class="flex-1 ml-64 p-6">

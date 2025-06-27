@@ -84,7 +84,7 @@
                 </div>
 
                 {{-- Waktu --}}
-                <div>
+                {{-- <div>
                     <label for="waktu" class="block text-sm font-medium text-gray-700">Waktu</label>
                     <select id="waktu" name="waktu" required
                         class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-400">
@@ -95,6 +95,17 @@
                                 {{ $slot }} - {{ sprintf('%02d:00', $jam + 1) }}
                             </option>
                         @endforeach
+                    </select>
+                    @error('waktu')
+                        <p class="text-red-500 text-xs">{{ $message }}</p>
+                    @enderror
+                </div> --}}
+                {{-- Waktu (akan diisi via JS) --}}
+                <div>
+                    <label for="waktu" class="block text-sm font-medium text-gray-700">Waktu</label>
+                    <select id="waktu" name="waktu" required
+                        class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-400">
+                        <option value="">Pilih tanggal dulu</option>
                     </select>
                     @error('waktu')
                         <p class="text-red-500 text-xs">{{ $message }}</p>
@@ -135,6 +146,45 @@
     </section>
 
     <x-footer></x-footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tanggalInput = document.querySelector('#tanggal');
+            const waktuSelect = document.querySelector('#waktu');
+
+            tanggalInput.addEventListener('change', function() {
+                const tanggal = this.value;
+
+                // Clear dulu
+                waktuSelect.innerHTML = '<option value="">Memuat...</option>';
+
+                fetch(`/cek-jam/${tanggal}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        waktuSelect.innerHTML = '';
+
+                        data.forEach(slot => {
+                            const option = document.createElement('option');
+                            option.value = slot.jam;
+                            option.textContent =
+                                `${slot.jam} - ${padJam(parseInt(slot.jam) + 1)} ${slot.status === 'booked' ? '(Terisi)' : ''}`;
+                            option.disabled = slot.status === 'booked';
+
+                            if (slot.status === 'booked') {
+                                option.classList.add('bg-red-200', 'text-gray-500');
+                            }
+
+                            waktuSelect.appendChild(option);
+                        });
+                    });
+            });
+
+            function padJam(jam) {
+                return jam < 10 ? '0' + jam + ':00' : jam + ':00';
+            }
+        });
+    </script>
+
 </body>
 
 </html>

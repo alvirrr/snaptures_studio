@@ -30,10 +30,11 @@
             class="{{ request()->is('tentang') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
             Tentang
         </a>
-        <a href="{{ url('jadwal') }}"
-            class="{{ request()->is('jadwal') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
+        <a href="{{ url('jadwal-booking') }}"
+            class="{{ request()->is('jadwal-booking') ? 'bg-neutral-600 text-neutral-300' : 'text-gray-900 hover:bg-neutral-300' }} py-1 px-2 rounded-md text-sm font-semibold">
             Jadwal
         </a>
+
 
         <!-- Dropdown Paket -->
         <div x-data="{ openPaket: false }" @mouseleave="openPaket = false" class="relative">
