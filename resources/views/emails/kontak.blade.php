@@ -29,6 +29,12 @@
         </div>
 
         <div style="margin-bottom:1rem;">
+            <p style="margin:0 0 0.5rem; font-weight:600; color:#374151;">Email</p>
+            <p style="margin:0; background:#f3f4f6; padding:0.75rem 1rem; border-radius:0.5rem; color:#111827;">
+                {{ $wa }}</p>
+        </div>
+
+        <div style="margin-bottom:1rem;">
             <p style="margin:0 0 0.5rem; font-weight:600; color:#374151;">Subjek</p>
             <p style="margin:0; background:#f3f4f6; padding:0.75rem 1rem; border-radius:0.5rem; color:#111827;">
                 {{ $subjek }}</p>

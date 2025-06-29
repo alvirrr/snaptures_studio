@@ -160,9 +160,9 @@ Route::get('/misi', function () {
 //     return view('formpesanan');
 // });
 
-Route::get('/nota', function () {
-    return view('nota');
-});
+// Route::get('/nota', function () {
+//     return view('nota');
+// });
 
 Route::get('/profil', function () {
     return view('profil');
@@ -188,16 +188,21 @@ Route::get('/pilih-lanjutan/{slug}', function ($slug) {
     return view('lanjutan', compact('slug'));
 })->name('pilih.lanjutan');
 
-Route::get('/formpesanan/{slug}', [formPesananController::class, 'showForm'])->name('formpesanan');
-Route::post('/kirim-pesanan', [formPesananController::class, 'submitForm'])->name('pesanan.submit');
+// Menampilkan form pemesanan berdasarkan slug paket
+Route::get('/formpesanan/{slug}', [PesananController::class, 'create'])->name('formpesanan');
 
-Route::get('/nota', function (Request $request) {
-    $data = $request->session()->get('nota_data');
-    if (!$data) {
-        return redirect('/'); // jika tidak ada data, kembali ke home
+// Menangani pengiriman data pemesanan
+Route::post('/kirim-pesanan', [PesananController::class, 'store'])->name('pesanan.submit');
+
+// Menampilkan halaman nota
+Route::get('/nota', function () {
+    if (!session()->has('nota_data')) {
+        return redirect('/'); // Redirect jika data nota tidak tersedia
     }
-    return view('nota', compact('data'));
+    return view('nota');
 })->name('nota');
+Route::get('/nota/unduh', [PesananController::class, 'unduhNota'])->name('nota.download');
+
 
 Route::get('/pembayaran', function () {
     return view('pembayaran');

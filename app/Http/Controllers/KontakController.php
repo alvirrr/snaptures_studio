@@ -12,6 +12,7 @@ class KontakController extends Controller
         $request->validate([
             'nama' => 'required|string|max:100',
             'email' => 'required|email',
+          //  'wa' => 'required | wa',
             'subjek' => 'nullable|string|max:150',
             'pesan' => 'required|string',
         ]);
@@ -19,6 +20,7 @@ class KontakController extends Controller
         $data = [
             'nama'   => $request->nama,
             'email'  => $request->email,
+           // 'wa' => $request->wa,
             'subjek' => $request->subjek ?? 'Tidak Ada Subjek',
             'pesan'  => $request->pesan,
         ];

@@ -39,11 +39,11 @@
         <!-- Dropdown Paket -->
         <div x-data="{ openPaket: false }" @mouseleave="openPaket = false" class="relative">
             <button type="button" @mouseenter="openPaket = true" @click="openPaket = !openPaket"
-                class="flex items-center gap-x-1 py-1 px-3 text-sm font-medium rounded-md transition duration-150 ease-in-out 
+                class="flex items-center gap-x-1 py-1 px-3 text-sm font-medium rounded-md transition duration-200 ease-in-out 
         {{ request()->is('paket') ? 'bg-neutral-600 text-neutral-100' : 'text-gray-900 hover:bg-neutral-300' }}">
                 Paket
                 <svg :class="{ 'rotate-180': openPaket }"
-                    class="h-4 w-4 transform transition-transform duration-300 text-black" viewBox="0 0 20 20"
+                    class="h-4 w-4 transform transition-transform duration-500 text-black" viewBox="0 0 20 20"
                     fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M5.23 7.21a.75.75 0 011.06 0L10 10.92l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.23 8.27a.75.75 0 010-1.06z"
