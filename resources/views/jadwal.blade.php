@@ -52,17 +52,15 @@
             {{-- Grid Slot Booking --}}
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                 @foreach ($slots as $slot)
-                    @if ($slot['status'] === 'available')
-                        <form method="POST" action="{{ route('jadwal.store') }}">
-                            @csrf
-                            <input type="hidden" name="tanggal" value="{{ $tanggal }}">
-                            <input type="hidden" name="jam" value="{{ $slot['jam'] }}">
+                    @php
+                        $urlPemesanan = route('paket.all', ['tanggal' => $tanggal, 'jam' => $slot['jam']]);
+                    @endphp
 
-                            <button type="submit"
-                                class="w-full p-4 rounded-2xl bg-green-500 text-white font-semibold shadow hover:bg-green-600 transition">
-                                {{ $slot['jam'] }}
-                            </button>
-                        </form>
+                    @if ($slot['status'] === 'available')
+                        <a href="{{ $urlPemesanan }}"
+                            class="block w-full p-4 rounded-2xl bg-green-500 text-white font-semibold text-center shadow hover:bg-green-600 transition">
+                            {{ $slot['jam'] }}
+                        </a>
                     @else
                         <div
                             class="w-full p-4 rounded-2xl bg-red-500 text-white font-semibold text-center shadow opacity-60 cursor-not-allowed">

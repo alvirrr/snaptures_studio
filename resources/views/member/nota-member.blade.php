@@ -64,22 +64,30 @@
                 <p><strong>Tanggal Booking:</strong> {{ \Carbon\Carbon::parse($pemesanan->tanggal)->format('d M Y') }}
                 </p>
                 <p><strong>Waktu Booking:</strong> {{ $pemesanan->waktu }} WIB</p>
-
-                {{-- Tanggal & Waktu Checkout --}}
-                <p><strong>Waktu Checkout:</strong>
-                    {{ \Carbon\Carbon::parse($pemesanan->created_at)->format('d M Y H:i') }} WIB
+                <p><strong>Background:</strong> {{ ucfirst($pemesanan->background) }}</p>
+                <p><strong>Jumlah Orang:</strong> {{ $pemesanan->jumlah_orang }}
+                    @if ($pemesanan->jumlah_orang > 2)
+                        (Tambahan {{ $pemesanan->jumlah_orang - 2 }} orang)
+                    @endif
+                </p>
+                <p><strong>Tambahan Spotlight:</strong>
+                    {{ $pemesanan->tambahan_spotlight ? 'Ya (Rp 15.000)' : 'Tidak' }}
                 </p>
 
                 <p><strong>Metode Pembayaran:</strong>
                     {{ $pemesanan->pembayaran === 'dp' ? 'DP (Rp 50.000)' : 'Lunas' }}
                 </p>
+
                 <p><strong>Total Bayar:</strong>
                     <span class="font-semibold text-lg text-green-700">
                         Rp {{ number_format($pemesanan->total_bayar, 0, ',', '.') }}
                     </span>
                 </p>
-                <p><strong>Status:</strong>
-                    <span class="capitalize">{{ $pemesanan->status }}</span>
+
+                <p><strong>Status:</strong> <span class="capitalize">{{ $pemesanan->status }}</span></p>
+
+                <p><strong>Waktu Checkout:</strong>
+                    {{ \Carbon\Carbon::parse($pemesanan->created_at)->format('d M Y H:i') }} WIB
                 </p>
             </div>
 
@@ -91,7 +99,6 @@
                 <p>Terima kasih telah memesan di <strong>Snapstures Studio</strong>!</p>
             </div>
 
-            <!-- Tombol Cetak -->
             <div class="mt-6 text-center no-print">
                 <button onclick="window.print()"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-medium shadow-md transition">

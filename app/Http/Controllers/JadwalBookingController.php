@@ -15,17 +15,25 @@ class JadwalBookingController extends Controller
     {
         $tanggal = $request->query('tanggal', now()->toDateString());
 
+        // Ambil jam yang sudah dibooking dan ubah ke format H:i
         $booked = JadwalBooking::whereDate('tanggal', $tanggal)
             ->pluck('jam')
+            ->map(function ($jam) {
+                return date('H:i', strtotime($jam));
+            })
             ->toArray();
 
         $slots = [];
-        for ($i = 8; $i <= 19; $i++) {
-            $jam = sprintf('%02d:00', $i);
+        $start = strtotime('08:00');
+        $end = strtotime('20:00');
+
+        while ($start < $end) {
+            $jam = date('H:i', $start);
             $slots[] = [
                 'jam' => $jam,
                 'status' => in_array($jam, $booked) ? 'booked' : 'available',
             ];
+            $start = strtotime('+30 minutes', $start);
         }
 
         return view('jadwal', compact('tanggal', 'slots'));
@@ -38,11 +46,13 @@ class JadwalBookingController extends Controller
     {
         $request->validate([
             'tanggal' => 'required|date|after_or_equal:today',
-            'jam' => 'required',
+            'jam' => 'required|date_format:H:i',
         ]);
 
+        $jam = $request->jam;
+
         $exists = JadwalBooking::where('tanggal', $request->tanggal)
-            ->where('jam', $request->jam)
+            ->whereTime('jam', $jam) // gunakan whereTime untuk akurat
             ->exists();
 
         if ($exists) {
@@ -50,28 +60,37 @@ class JadwalBookingController extends Controller
         }
 
         JadwalBooking::create([
-            'user_id' => Auth::id(),
+            'user_id' => Auth::id(), // nullable jika belum login
             'tanggal' => $request->tanggal,
-            'jam' => $request->jam,
+            'jam' => $jam,
         ]);
 
         return back()->with('success', 'Berhasil booking slot.');
     }
 
     /**
-     * AJAX: Ambil semua slot berdasarkan tanggal
+     * AJAX: Ambil semua slot berdasarkan tanggal (dipakai di form pemesanan)
      */
     public function cekJam($tanggal)
     {
-        $booked = JadwalBooking::whereDate('tanggal', $tanggal)->pluck('jam')->toArray();
+        $booked = JadwalBooking::whereDate('tanggal', $tanggal)
+            ->pluck('jam')
+            ->map(function ($jam) {
+                return date('H:i', strtotime($jam));
+            })
+            ->toArray();
 
         $slots = [];
-        for ($i = 8; $i <= 19; $i++) {
-            $jam = sprintf('%02d:00', $i);
+        $start = strtotime('08:00');
+        $end = strtotime('20:00');
+
+        while ($start < $end) {
+            $jam = date('H:i', $start);
             $slots[] = [
                 'jam' => $jam,
                 'status' => in_array($jam, $booked) ? 'booked' : 'available',
             ];
+            $start = strtotime('+30 minutes', $start);
         }
 
         return response()->json($slots);
