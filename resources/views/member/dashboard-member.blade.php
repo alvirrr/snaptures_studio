@@ -98,7 +98,9 @@
                     <i class="fas fa-clock text-blue-500 text-lg"></i>
                 </div>
                 <p class="text-sm text-gray-600">Lihat semua aktivitas pemesanan Anda sebelumnya.</p>
-                <a href="#" class="inline-block mt-4 text-blue-600 hover:underline text-sm">Lihat Detail</a>
+                <a href="{{ route('member.riwayat') }}"
+                    class="inline-block mt-4 text-blue-600 hover:underline text-sm">Lihat Detail</a>
+
             </div>
 
             <!-- Card 3 - Poin Member -->

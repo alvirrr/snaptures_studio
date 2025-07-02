@@ -16,6 +16,10 @@ class Pemesanan extends Model
         'no_hp',
         'tanggal',
         'waktu',
+        'background',
+        'jumlah_orang',
+        'tambahan_orang',
+        'tambahan_spotlight',
         'pembayaran',
         'total_bayar',
         'status',
@@ -30,4 +34,5 @@ class Pemesanan extends Model
     {
         return $this->belongsTo(Paket::class);
     }
+
 }

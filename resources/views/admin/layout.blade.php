@@ -16,7 +16,6 @@
 <body class="flex bg-neutral-100 min-h-screen text-gray-800">
 
     <!-- Sidebar -->
-    <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-md fixed h-full z-40">
         <div class="p-6 text-2xl font-bold text-center text-blue-600 border-b border-gray-200">
             Admin Panel
@@ -34,13 +33,29 @@
             <a href="{{ route('admin.portofolio') }}" class="block px-6 py-2 hover:bg-blue-100">
                 <i class="fas fa-image mr-2"></i> Portofolio
             </a>
-
             <a href="{{ route('admin.properti') }}" class="block px-6 py-2 hover:bg-blue-100">
                 <i class="fas fa-hat-cowboy mr-2"></i> Properti
             </a>
             <a href="{{ route('admin.background') }}" class="block px-6 py-2 hover:bg-blue-100">
                 <i class="fas fa-layer-group mr-2"></i> Background
             </a>
+
+            <!-- Transaksi Dropdown -->
+            <div x-data="{ open: false }" class="px-4">
+                <button @click="open = !open"
+                    class="flex items-center w-full text-left py-2 hover:bg-blue-100 px-2 rounded transition">
+                    <i class="fas fa-money-check-alt mr-2"></i>
+                    <span class="flex-1">Transaksi</span>
+                    <i class="fas fa-chevron-down text-xs" :class="{ 'rotate-180': open }"></i>
+                </button>
+                <div x-show="open" class="mt-1 pl-6 space-y-1" x-cloak>
+                    <a href="" class="block py-1 hover:text-blue-600">Data Pesanan</a>
+                    <a href="" class="block py-1 hover:text-blue-600">Konfirmasi
+                        Pembayaran</a>
+                    <a href="{{ route('admin.reschedule.index') }}" class="block py-1 hover:text-blue-600">Reschedule
+                        Jadwal</a>
+                </div>
+            </div>
 
             <a href="#" class="block px-6 py-2 hover:bg-blue-100">
                 <i class="fas fa-chart-line mr-2"></i> Laporan
@@ -59,7 +74,6 @@
             </form>
         </nav>
     </aside>
-
 
     <!-- Konten Utama -->
     <main class="flex-1 ml-64 p-6">

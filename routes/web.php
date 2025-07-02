@@ -16,6 +16,7 @@ use App\Http\Controllers\formPesananController;
 use App\Http\Controllers\registmemberController;
 use App\Http\Controllers\JadwalBookingController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\AdminRescheduleController;
 use App\Http\Controllers\MemberPemesananController;
 use App\Http\Controllers\EditProfilMemberController;
 use App\Http\Controllers\Admin\RegistAdminController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Admin\PembayaranAdminController;
 use App\Http\Controllers\Member\ForgotPasswordController;
 use App\Http\Controllers\Dashboard\MenuPropertiController;
 use App\Http\Controllers\Admin\LupaPasswordAdminController;
+use App\Http\Controllers\Dashboard\AdminPemesananController;
 use App\Http\Controllers\Dashboard\MenuBackgroundController;
 use App\Http\Controllers\Dashboard\MenuPortofolioController;
 
@@ -220,7 +222,18 @@ Route::middleware(['auth:member'])->group(function () {
 
     // Route untuk nota:
     Route::get('/member/pesanan/nota/{id}', [MemberPemesananController::class, 'showNota'])->name('member.pesanan.nota');
+
+    Route::get('/member/riwayat', [MemberPemesananController::class, 'riwayat'])->name('member.riwayat')->middleware('auth:member');
 });
+Route::get('/member/nota/download/{id}', [MemberPemesananController::class, 'downloadNota'])
+    ->name('nota.member.download')
+    ->middleware('auth:member');
+Route::get('/member/pemesanan/{id}/reschedule', [MemberPemesananController::class, 'formReschedule'])
+    ->name('member.reschedule.form')
+    ->middleware('auth:member');
+Route::get('/member/pemesanan/{id}/reschedule', [MemberPemesananController::class, 'formReschedule'])->name('member.reschedule.form')->middleware('auth:member');
+Route::post('/member/pemesanan/{id}/reschedule', [MemberPemesananController::class, 'submitReschedule'])->name('member.reschedule.submit')->middleware('auth:member');
+
 
 
 // Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
@@ -328,6 +341,17 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::delete('/background/{background}', [MenuBackgroundController::class, 'destroy'])->name('admin.background.destroy');
 });
 
+// Route::middleware(['auth:admin'])->group(function () {
+//     Route::get('/admin/konfirmasi-jadwal', [AdminPemesananController::class, 'index'])->name('admin.konfirmasi.index');
+//     Route::post('/admin/konfirmasi/{id}', [AdminPemesananController::class, 'konfirmasi'])->name('admin.konfirmasi.setuju');
+//     Route::post('/admin/tolak/{id}', [AdminPemesananController::class, 'tolak'])->name('admin.konfirmasi.tolak');
+// });
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/reschedule', [AdminRescheduleController::class, 'index'])->name('admin.reschedule.index');
+    Route::post('/reschedule/{id}/approve', [AdminRescheduleController::class, 'approve'])->name('admin.reschedule.approve');
+    Route::post('/reschedule/{id}/reject', [AdminRescheduleController::class, 'reject'])->name('admin.reschedule.reject');
+});
 
 Route::get('/jadwal-booking', [JadwalBookingController::class, 'index'])->name('jadwal.index');
 Route::post('/jadwal-booking', [JadwalBookingController::class, 'store'])->name('jadwal.store');

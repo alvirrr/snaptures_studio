@@ -24,4 +24,9 @@ class Member extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function pemesanans()
+    {
+        return $this->hasMany(Pemesanan::class);
+    }
 }
