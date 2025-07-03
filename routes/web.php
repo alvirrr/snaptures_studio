@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\LupaPasswordAdminController;
 use App\Http\Controllers\Dashboard\AdminPemesananController;
 use App\Http\Controllers\Dashboard\MenuBackgroundController;
 use App\Http\Controllers\Dashboard\MenuPortofolioController;
+use App\Http\Controllers\Dashboard\KonfirmasiPembayaranController;
 
 Route::get('/', function () {
     $paket = Paket::first(); // atau bisa pakai where/kategori sesuai kebutuhan
@@ -209,7 +210,7 @@ Route::get('/nota/unduh', [PesananController::class, 'unduhNota'])->name('nota.d
 Route::get('/pembayaran', function () {
     return view('pembayaran');
 })->name('pembayaran');
-
+Route::post('/konfirmasi-pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
 
 // Pilih Paket dari Dashboard
 Route::middleware(['auth:member'])->group(function () {
@@ -224,7 +225,15 @@ Route::middleware(['auth:member'])->group(function () {
     Route::get('/member/pesanan/nota/{id}', [MemberPemesananController::class, 'showNota'])->name('member.pesanan.nota');
 
     Route::get('/member/riwayat', [MemberPemesananController::class, 'riwayat'])->name('member.riwayat')->middleware('auth:member');
+
+    Route::get('/member/poin', [MemberAuthController::class, 'poin'])->name('member.poin');
+    //Route::get('/member/poin/riwayat', [MemberPemesananController::class, 'riwayatPoin'])->name('member.poin.riwayat');
+
 });
+Route::get('/member/riwayat-poin', [MemberPemesananController::class, 'riwayatPoin'])
+    ->middleware('auth:member')
+    ->name('member.riwayat-poin');
+
 Route::get('/member/nota/download/{id}', [MemberPemesananController::class, 'downloadNota'])
     ->name('nota.member.download')
     ->middleware('auth:member');
@@ -233,6 +242,7 @@ Route::get('/member/pemesanan/{id}/reschedule', [MemberPemesananController::clas
     ->middleware('auth:member');
 Route::get('/member/pemesanan/{id}/reschedule', [MemberPemesananController::class, 'formReschedule'])->name('member.reschedule.form')->middleware('auth:member');
 Route::post('/member/pemesanan/{id}/reschedule', [MemberPemesananController::class, 'submitReschedule'])->name('member.reschedule.submit')->middleware('auth:member');
+
 
 
 
@@ -352,6 +362,23 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::post('/reschedule/{id}/approve', [AdminRescheduleController::class, 'approve'])->name('admin.reschedule.approve');
     Route::post('/reschedule/{id}/reject', [AdminRescheduleController::class, 'reject'])->name('admin.reschedule.reject');
 });
+
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/pesanan', [AdminPemesananController::class, 'index'])->name('admin.pesanan.index');
+    Route::get('/pesanan/{id}', [AdminPemesananController::class, 'show'])->name('admin.pesanan.show');
+    Route::get('/admin/pesanan-nonmember/{id}', [AdminPemesananController::class, 'showNonMember'])->name('admin.pesanan.nonmember.show');
+});
+
+Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
+    Route::get('/konfirmasi-pembayaran', [KonfirmasiPembayaranController::class, 'index'])->name('admin.konfirmasi.index');
+    Route::post('/konfirmasi-pembayaran/{id}/konfirmasi', [KonfirmasiPembayaranController::class, 'konfirmasi'])->name('admin.konfirmasi.konfirmasi');
+});
+
+Route::prefix('member')->middleware('auth:member')->group(function () {
+    Route::get('/voucher', [\App\Http\Controllers\Member\VoucherController::class, 'index'])->name('member.voucher');
+    Route::post('/voucher/tukar/{id}', [\App\Http\Controllers\Member\VoucherController::class, 'tukar'])->name('member.voucher.tukar');
+});
+
 
 Route::get('/jadwal-booking', [JadwalBookingController::class, 'index'])->name('jadwal.index');
 Route::post('/jadwal-booking', [JadwalBookingController::class, 'store'])->name('jadwal.store');

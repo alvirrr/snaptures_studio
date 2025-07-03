@@ -5,31 +5,42 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pemesanan;
+use App\Models\Member;   // untuk member
+use App\Models\Pesanan;   // untuk non-member
 
 class AdminPemesananController extends Controller
 {
-    // //
-    // public function index()
-    // {
-    //     $pemesanans = Pemesanan::where('status', 'Pending')->orderBy('tanggal')->get();
-    //     return view('admin.konfirmasi-jadwal', compact('pemesanans'));
-    // }
+    // Menampilkan daftar semua pemesanan (member dan non-member)
+    public function index(Request $request)
+    {
+        $tanggal = $request->tanggal;
+        $status = $request->status;
 
-    // public function konfirmasi($id)
-    // {
-    //     $pemesanan = Pemesanan::findOrFail($id);
-    //     $pemesanan->status = 'Confirmed';
-    //     $pemesanan->save();
+        $pemesanansMember = Pemesanan::with(['member', 'paket'])
+            ->when($tanggal, fn($q) => $q->whereDate('tanggal', $tanggal))
+            ->when($status, fn($q) => $q->where('status', $status))
+            ->latest()
+            ->paginate(10, ['*'], 'members_page'); // <--- paginate khusus members
 
-    //     return back()->with('success', 'Pemesanan berhasil dikonfirmasi.');
-    // }
+        $pemesanansNonMember = Pesanan::with('paket')
+            ->when($tanggal, fn($q) => $q->whereDate('tanggal', $tanggal))
+            ->when($status, fn($q) => $q->where('status', $status))
+            ->latest()
+            ->paginate(10, ['*'], 'nonmembers_page'); // <--- paginate khusus non-member
 
-    // public function tolak($id)
-    // {
-    //     $pemesanan = Pemesanan::findOrFail($id);
-    //     $pemesanan->status = 'Ditolak';
-    //     $pemesanan->save();
+        return view('admin.pesanan', compact('pemesanansMember', 'pemesanansNonMember'));
+    }
 
-    //     return back()->with('success', 'Pemesanan ditolak.');
-    // }
+    // Menampilkan detail pemesanan member
+    public function show($id)
+    {
+        $pemesanan = Pemesanan::with(['member', 'paket'])->findOrFail($id);
+
+        return view('admin.detail-pesanan', compact('pemesanan'));
+    }
+    public function showNonMember($id)
+    {
+        $pesanan = Pesanan::with('paket')->findOrFail($id);
+        return view('admin.detail-pesanan-nonmember', compact('pesanan'));
+    }
 }

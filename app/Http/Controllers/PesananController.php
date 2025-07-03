@@ -7,6 +7,8 @@ use App\Models\Paket;
 use App\Models\JadwalBooking;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PemesananBerhasilMail;
 
 class PesananController extends Controller
 {
@@ -24,6 +26,7 @@ class PesananController extends Controller
         $request->validate([
             'nama'          => 'required|string|max:100',
             'no_hp'         => 'required|string|max:20',
+            'email'         => 'required|email|max:255',
             'paket_id'      => 'required|exists:pakets,id',
             'tanggal'       => 'required|date|after_or_equal:today',
             'waktu'         => 'required',
@@ -32,7 +35,7 @@ class PesananController extends Controller
             'pembayaran'    => 'required|in:dp,lunas',
         ]);
 
-        // Cek ketersediaan slot booking
+        // Cek apakah slot sudah dibooking
         $slotTerpakai = JadwalBooking::where('tanggal', $request->tanggal)
             ->where('jam', $request->waktu)
             ->exists();
@@ -45,23 +48,23 @@ class PesananController extends Controller
         $paket = Paket::findOrFail($request->paket_id);
         $hargaDasar = $paket->harga;
 
-        // Hitung biaya tambahan orang (lebih dari 2)
+        // Hitung biaya tambahan
         $jumlahOrang     = $request->jumlah_orang;
         $tambahanOrang   = max(0, $jumlahOrang - 2);
         $biayaOrangExtra = $tambahanOrang * 15000;
 
-        // Hitung biaya spotlight
         $pakaiSpotlight  = $request->has('tambahan_spotlight');
         $biayaSpotlight  = $pakaiSpotlight ? 15000 : 0;
 
-        // Hitung total harga
+        // Hitung total
         $totalHarga = $hargaDasar + $biayaOrangExtra + $biayaSpotlight;
-        $idPesanan = 'SNAPS' . now()->format('YmdHis');
+        $idPesanan  = 'SNAPS' . now()->format('YmdHis');
 
         // Simpan ke database
         $pesanan = Pesanan::create([
             'id_pesanan'         => $idPesanan,
             'nama'               => $request->nama,
+            'email'              => $request->email,
             'no_hp'              => $request->no_hp,
             'paket_id'           => $paket->id,
             'tanggal'            => $request->tanggal,
@@ -72,9 +75,10 @@ class PesananController extends Controller
             'tambahan_spotlight' => $pakaiSpotlight,
             'total_harga'        => $totalHarga,
             'pembayaran'         => $request->pembayaran,
+            'status'             => 'pending',
         ]);
 
-        // Simpan ke tabel booking jadwal
+        // Simpan jadwal booking
         JadwalBooking::create([
             'user_id' => null,
             'tanggal' => $request->tanggal,
@@ -85,9 +89,10 @@ class PesananController extends Controller
         session()->put('nota_data', [
             'id_pesanan'          => $idPesanan,
             'nama'                => $request->nama,
+            'email'               => $request->email,
             'no_hp'               => $request->no_hp,
             'paket'               => $paket->nama,
-            'harga_paket'         => $hargaDasar, // ✅ Ditambahkan
+            'harga_paket'         => $hargaDasar,
             'tanggal'             => $request->tanggal,
             'waktu'               => $request->waktu,
             'background'          => $request->background,
@@ -98,15 +103,22 @@ class PesananController extends Controller
             'total_bayar'         => $totalHarga,
         ]);
 
+        // Kirim email ke user
+        if ($request->filled('email')) {
+            Mail::to($request->email)->send(new PemesananBerhasilMail($pesanan));
+        }
+
+        // Kirim notifikasi ke admin (ganti alamat email admin sesuai kebutuhan)
+        Mail::to('mantappum@gmail.com')->send(new PemesananBerhasilMail($pesanan));
+
         // Redirect ke halaman nota
         return redirect()->route('nota')->with('success', 'Pesanan berhasil dikirim!');
     }
 
-
+    // Unduh PDF nota
     public function unduhNota()
     {
         $data = session('nota_data');
-
         $pdf = Pdf::loadView('nota-pdf', ['data' => $data]);
         return $pdf->download('nota-pesanan-' . $data['id_pesanan'] . '.pdf');
     }

@@ -49,8 +49,8 @@
                     <i class="fas fa-chevron-down text-xs" :class="{ 'rotate-180': open }"></i>
                 </button>
                 <div x-show="open" class="mt-1 pl-6 space-y-1" x-cloak>
-                    <a href="" class="block py-1 hover:text-blue-600">Data Pesanan</a>
-                    <a href="" class="block py-1 hover:text-blue-600">Konfirmasi
+                    <a href="{{ route('admin.pesanan.index') }}" class="block py-1 hover:text-blue-600">Data Pesanan</a>
+                    <a href="{{ route('admin.konfirmasi.index') }}" class="block py-1 hover:text-blue-600">Konfirmasi
                         Pembayaran</a>
                     <a href="{{ route('admin.reschedule.index') }}" class="block py-1 hover:text-blue-600">Reschedule
                         Jadwal</a>
@@ -66,7 +66,7 @@
             <a href="#" class="block px-6 py-2 hover:bg-blue-100">
                 <i class="fas fa-cog mr-2"></i> Pengaturan
             </a>
-            <form method="POST" action="#" class="px-6 mt-4">
+            <form method="POST" action="{{ route('admin.logout') }}" class="px-6 mt-4">
                 @csrf
                 <button type="submit" class="w-full text-left py-2 hover:bg-red-100 text-red-600">
                     <i class="fas fa-sign-out-alt mr-2"></i> Logout

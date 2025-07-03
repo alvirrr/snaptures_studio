@@ -110,9 +110,16 @@
                     <h3 class="text-xl font-semibold text-gray-800">Poin Member</h3>
                     <i class="fas fa-star text-yellow-400 text-lg"></i>
                 </div>
-                <p class="text-sm text-gray-600">Poin saat ini: <span class="font-bold text-gray-900">120</span></p>
-                <a href="#" class="inline-block mt-4 text-blue-600 hover:underline text-sm">Cek Penukaran</a>
+                <p class="text-sm text-gray-600">
+                    Poin saat ini: <span class="font-bold text-gray-900">{{ $member->poin }}</span>
+                </p>
+                <a href="{{ route('member.riwayat-poin') }}"
+                    class="inline-block mt-4 text-blue-600 hover:underline text-sm">
+                    Lihat Riwayat Poin
+                </a>
+
             </div>
+
 
             <!-- Card 4 - Voucher & Bonus -->
             <div

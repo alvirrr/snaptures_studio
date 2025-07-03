@@ -45,7 +45,7 @@
             <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data"
                 class="space-y-5">
                 @csrf
-
+                
                 <!-- Nama -->
                 <div>
                     <label for="nama" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>

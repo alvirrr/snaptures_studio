@@ -14,7 +14,7 @@
                     <a href="mailto:snapturesstudio@gmail.com" class="text-amber-500 hover:text-amber-600 text-2xl"
                         target="_blank"><i class="fa-solid fa-envelope"></i></a>
                     <!-- WhatsApp -->
-                    <a href="https://wa.me/628979162846" target="_blank"
+                    <a href="https://wa.me/6285651444804" target="_blank"
                         class="text-green-500 hover:text-green-600 text-2xl">
                         <i class="fab fa-whatsapp"></i>
                     </a>

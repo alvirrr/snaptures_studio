@@ -4,11 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pemesanan;
+use App\Models\PointLog;
 use App\Models\Paket;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use App\Mail\AdminRescheduleRequestMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MemberOrderSuccessMail;
+use App\Mail\AdminOrderNotificationMail;
+
 
 class MemberPemesananController extends Controller
 {
@@ -69,11 +75,28 @@ class MemberPemesananController extends Controller
             'status'             => 'pending',
         ]);
 
+        // Kirim email konfirmasi ke member
+        // Kirim email ke member
+        Mail::to($pemesanan->member->email)->send(new MemberOrderSuccessMail($pemesanan));
+
+        // Kirim notifikasi ke admin
+        Mail::to(env('ADMIN_EMAIL'))->send(new AdminOrderNotificationMail($pemesanan));
+
+
+
         if ($request->pembayaran === 'lunas') {
             $member = $pemesanan->member;
             $member->poin += 10;
             $member->save();
+
+            PointLog::create([
+                'member_id' => $member->id,
+                'poin' => 10,
+                'tipe' => 'tambah',
+                'keterangan' => 'Bonus poin dari pemesanan lunas (ID: ' . $pemesanan->id . ')',
+            ]);
         }
+
 
         return redirect()->route('member.pesanan.nota', $pemesanan->id)
             ->with('success', 'Pemesanan berhasil dibuat!');
@@ -180,6 +203,25 @@ class MemberPemesananController extends Controller
         $pemesanan->reschedule_status = 'Pending';
         $pemesanan->save();
 
+
+        Mail::to(env('ADMIN_EMAIL'))->send(new AdminRescheduleRequestMail($pemesanan));
+
+
         return redirect()->route('member.riwayat')->with('success', 'Permintaan reschedule berhasil dikirim. Menunggu persetujuan admin.');
+    }
+
+    public function riwayatPoin()
+    {
+        $member = Auth::guard('member')->user();
+
+        // Ambil semua riwayat poin untuk member ini
+        $riwayatPoin = \App\Models\PointLog::where('member_id', $member->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Ambil total poin (dari tabel members)
+        $totalPoin = $member->poin;
+
+        return view('member.riwayat-point', compact('riwayatPoin', 'totalPoin'));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pembayaran;
+use App\Models\Pemesanan;
 use Illuminate\Support\Facades\Storage;
 
 class PembayaranController extends Controller
@@ -21,7 +22,7 @@ class PembayaranController extends Controller
         // Simpan bukti transfer
         $buktiPath = $request->file('bukti')->store('bukti-pembayaran', 'public');
 
-        // Simpan ke database
+        // Simpan ke tabel pembayaran
         Pembayaran::create([
             'nama' => $validated['nama'],
             'invoice' => $validated['invoice'],
@@ -29,6 +30,17 @@ class PembayaranController extends Controller
             'jumlah' => $validated['jumlah'],
             'bukti' => $buktiPath,
         ]);
+
+        // Cari dan update pemesanan jika ditemukan
+        $pemesanan = Pemesanan::where('kode_transaksi', $validated['invoice'])
+            ->orWhere('id', $validated['invoice'])
+            ->first();
+
+        if ($pemesanan) {
+            $pemesanan->bukti_pembayaran = $buktiPath;
+            $pemesanan->status = 'pending'; // Menunggu konfirmasi admin
+            $pemesanan->save();
+        }
 
         return redirect()->back()->with('success', 'Konfirmasi pembayaran berhasil dikirim.');
     }
